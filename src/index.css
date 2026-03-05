@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Default theme: Premium Gold */
+    --color-primary-50: #fdfcf8;
+    --color-primary-100: #fbf6ec;
+    --color-primary-200: #f4ebd2;
+    --color-primary-300: #ead9ae;
+    --color-primary-400: #ddbf81;
+    --color-primary-500: #c9a227;
+    /* Target Gold */
+    --color-primary-600: #ab851e;
+    --color-primary-700: #886419;
+    --color-primary-800: #715119;
+    --color-primary-900: #60431a;
+  }
+
+  :root[data-theme="blue"] {
+    /* Blue theme */
+    --color-primary-50: #f0f3fe;
+    --color-primary-100: #e3e8fc;
+    --color-primary-200: #cbd6f9;
+    --color-primary-300: #a8bff4;
+    --color-primary-400: #819eed;
+    --color-primary-500: #5d7be4;
+    --color-primary-600: #1132d4;
+    /* Base Blue */
+    --color-primary-700: #334ab5;
+    --color-primary-800: #2b3e94;
+    --color-primary-900: #283776;
+  }
+
+  body {
+    @apply bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
