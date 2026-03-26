@@ -42,22 +42,22 @@ export default function News() {
                             </span>
                             <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] max-w-4xl tracking-tight break-words">
                                 {isRtl
-                                    ? 'جامعة السادات الذكية تطلق مبادرة بحثية للطاقة المستدامة بقيمة 50 مليون دولار'
-                                    : 'Sadat Smart University Launches $50M Sustainable Energy Research Initiative'}
+                                    ? 'اخبار وفعاليات جامعه مدينه السادات'
+                                    : 'News and events of Sadat City University'}
                             </h1>
-                            <p className="text-slate-300 text-lg md:text-xl font-medium max-w-3xl line-clamp-2 md:line-clamp-none">
+                            {/* <p className="text-slate-300 text-lg md:text-xl font-medium max-w-3xl line-clamp-2 md:line-clamp-none">
                                 {isRtl
                                     ? 'بالتعاون مع قادة التكنولوجيا الدوليين، تقود جامعتنا مشروعًا مدته عقد من الزمان لإحداث ثورة في حلول تخزين الطاقة الخضراء للمدن الذكية الحضرية.'
                                     : 'In collaboration with international tech leaders, our university is pioneering a decade-long project to revolutionize green energy storage solutions for urban smart cities.'}
-                            </p>
+                            </p> */}
                             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mt-4 w-full sm:w-auto">
                                 <span className="flex items-center gap-2 text-white/80 text-sm font-bold bg-slate-900/50 backdrop-blur-md px-4 py-2 rounded-xl w-fit">
-                                    <span className="material-symbols-outlined text-[18px]">calendar_today</span> {isRtl ? '24 أكتوبر 2024' : 'October 24, 2024'}
+                                    <span className="material-symbols-outlined text-[18px]">calendar_today</span> {isRtl ? '20 أكتوبر 2026' : 'October 20, 2026'}
                                 </span>
-                                <button className={`w-full sm:w-auto justify-center bg-primary hover:bg-primary-600 text-slate-900 font-black py-4 px-8 rounded-xl transition-all flex items-center gap-2 group/btn shadow-xl shadow-primary/20`}>
+                                {/* <button className={`w-full sm:w-auto justify-center bg-primary hover:bg-primary-600 text-slate-900 font-black py-4 px-8 rounded-xl transition-all flex items-center gap-2 group/btn shadow-xl shadow-primary/20`}>
                                     {isRtl ? 'قراءة القصة كاملة' : 'Read Full Story'}
                                     <span className={`material-symbols-outlined transition-transform ${isRtl ? 'group-hover/btn:-translate-x-1 rotate-180' : 'group-hover/btn:translate-x-1'}`}>arrow_forward</span>
-                                </button>
+                                </button> */}
                             </div>
                         </div>
                     </div>

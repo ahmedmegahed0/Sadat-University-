@@ -1,10 +1,66 @@
-import React from 'react';
-import { useThemeContext } from '../context/ThemeContext';
+import React, { useState, useEffect } from 'react';
+import { useThemeContext } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
+import { getUniversities, addUniversity, deleteUniversity, getRankings, addRanking, deleteRanking } from '../../services/mockData';
 
 export default function SuperAdminDashboard() {
     const { isRtl, toggleDark, isDarkMode } = useThemeContext();
     const navigate = useNavigate();
+
+    const [universities, setUniversities] = useState([]);
+    const [rankings, setRankings] = useState([]);
+    const [activeTab, setActiveTab] = useState('universities');
+
+    useEffect(() => {
+        setUniversities(getUniversities());
+        setRankings(getRankings());
+    }, []);
+
+    const handleAddUniversity = () => {
+        const input = window.prompt("Enter data separated by comma: Name(EN), Name(AR), Category(egyptian/arab/foreign), Students");
+        if (input) {
+            const parts = input.split(',').map(s => s.trim());
+            if (parts.length >= 3) {
+                addUniversity({
+                    category: parts[2], nameEn: parts[0], nameAr: parts[1],
+                    overviewEn: "New University added from dashboard.", overviewAr: "جامعة جديدة تمت إضافتها من لوحة التحكم.",
+                    image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070",
+                    icon: "school", students: parts[3] || "0",
+                    accreditationEn: "Pending", accreditationAr: "قيد المراجعة"
+                });
+                setUniversities(getUniversities());
+            }
+        }
+    };
+
+    const handleDeleteUniversity = (id) => {
+        if (window.confirm("Are you sure you want to delete this university?")) {
+            deleteUniversity(id);
+            setUniversities(getUniversities());
+        }
+    };
+
+    const handleAddRanking = () => {
+        const input = window.prompt("Enter ranking data separated by comma: Slug, Title(AR), Title(EN)");
+        if (input) {
+            const parts = input.split(',').map(s => s.trim());
+            if (parts.length >= 2) {
+                addRanking({
+                    slug: parts[0], title: parts[1], breadcrumb: parts[1],
+                    subtitle: parts[2] || "New Ranking", bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070",
+                    logoImage: "", aboutText: [], achievements: [], stats: [], reportUrl: "#", methodologyUrl: "#"
+                });
+                setRankings(getRankings());
+            }
+        }
+    };
+
+    const handleDeleteRanking = (slug) => {
+        if (window.confirm("Are you sure you want to delete this ranking?")) {
+            deleteRanking(slug);
+            setRankings(getRankings());
+        }
+    };
 
     return (
         <div className={`flex h-screen overflow-hidden bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased ${isRtl ? 'rtl' : 'ltr'}`}>
@@ -203,12 +259,17 @@ export default function SuperAdminDashboard() {
                             <div className="flex items-center justify-between mb-2">
                                 <div className="flex items-center gap-3">
                                     <div className="w-1 h-6 bg-primary rounded-full"></div>
-                                    <h3 className="text-base font-bold uppercase tracking-widest text-slate-900 dark:text-white">
-                                        {isRtl ? 'إدارة الكليات' : 'College Management'}
-                                    </h3>
+                                    <div className="flex gap-4">
+                                        <button onClick={() => setActiveTab('universities')} className={`text-base font-bold uppercase tracking-widest ${activeTab === 'universities' ? 'text-primary' : 'text-slate-500 dark:text-slate-400'} transition-colors`}>
+                                            {isRtl ? 'إدارة الجامعات' : 'Universities'}
+                                        </button>
+                                        <button onClick={() => setActiveTab('rankings')} className={`text-base font-bold uppercase tracking-widest ${activeTab === 'rankings' ? 'text-primary' : 'text-slate-500 dark:text-slate-400'} transition-colors`}>
+                                            {isRtl ? 'إدارة التصنيفات' : 'Rankings'}
+                                        </button>
+                                    </div>
                                 </div>
-                                <button className={`bg-primary hover:bg-primary/90 text-slate-900 dark:text-white px-3 md:px-5 py-2 md:py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all shadow-lg shadow-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
-                                    <span className="material-symbols-outlined text-sm">add</span> {isRtl ? 'تسجيل كلية جديدة' : 'REGISTER NEW COLLEGE'}
+                                <button onClick={activeTab === 'universities' ? handleAddUniversity : handleAddRanking} className={`bg-primary hover:bg-primary/90 text-slate-900 dark:text-white px-3 md:px-5 py-2 md:py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all shadow-lg shadow-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
+                                    <span className="material-symbols-outlined text-sm">add</span> {isRtl ? 'تسجيل جديد' : 'ADD NEW'}
                                 </button>
                             </div>
 
@@ -216,117 +277,74 @@ export default function SuperAdminDashboard() {
                                 <table className={`w-full ${isRtl ? 'text-right' : 'text-left'}`}>
                                     <thead className="bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/5">
                                         <tr>
-                                            <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">{isRtl ? 'تفاصيل المؤسسة' : 'Institution Detail'}</th>
-                                            <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">{isRtl ? 'الطلاب' : 'Students'}</th>
-                                            <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">{isRtl ? 'العميد / الإدارة' : 'Dean / Admin'}</th>
+                                            <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">{isRtl ? 'التفاصيل' : 'Details'}</th>
+                                            <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">{activeTab === 'universities' ? (isRtl ? 'الفئة' : 'Category') : ''}</th>
+                                            <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">{activeTab === 'universities' ? (isRtl ? 'الطلاب' : 'Students') : ''}</th>
                                             <th className={`px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest ${isRtl ? 'text-left' : 'text-right'}`}>{isRtl ? 'عناصر التحكم' : 'Controls'}</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 dark:divide-white/5 text-slate-900 dark:text-white">
-                                        {/* Row 1 */}
-                                        <tr className="hover:bg-primary/5 transition-colors group">
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="h-12 w-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 p-1 bg-black/5 dark:bg-white/5">
-                                                        <img alt="CS" className="w-full h-full object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwrj_KxiwduG36u51vdYRnTcjyFMivApZ5_uRFPrZFdi4QG8iWqyIKFKui-x43IkmEoXR2wr5nmFX3GbfaeHxYfJ8bhYRqxwMoDteQuCuUHPREcIdqyg4lM26IydVPoLVGjrwglreWV10I03lN_bK8e10MNNjnsaF3v0C_i4rNa2Y3Kd5p7sfpH78vsyn9qq-wLjSxgn4eYhyVqZzZf4yntPi3lKvnRgyqjrAQuG2ixUb4DJlkPIXa4ZpzPq2noxvTkPfS-PZRqVDo" />
+                                        {activeTab === 'universities' ? universities.map((uni) => (
+                                            <tr key={uni.id} className="hover:bg-primary/5 transition-colors group">
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="h-12 w-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 p-1 bg-black/5 dark:bg-white/5">
+                                                            <img alt={uni.nameEn} className="w-full h-full object-cover rounded-lg" src={uni.image} />
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-bold text-sm cursor-pointer hover:underline" onClick={() => navigate(`/universities/${uni.category}`)}>
+                                                                {isRtl ? uni.nameAr : uni.nameEn}
+                                                            </p>
+                                                            <p className="text-[10px] font-bold text-primary uppercase" dir="ltr">{uni.category}</p>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <p className="font-bold text-sm cursor-pointer hover:underline" onClick={() => navigate('/college/computer-science')}>
-                                                            {isRtl ? 'كلية الحاسبات والذكاء الاصطناعي' : 'College of Computer Science'}
-                                                        </p>
-                                                        <p className="text-[10px] font-bold text-primary uppercase" dir="ltr">Code: CCS-01</p>
+                                                </td>
+                                                <td className="px-6 py-4 text-center">
+                                                    <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 text-xs font-bold text-slate-900 dark:text-white">{uni.category}</span>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <p className="text-sm font-medium">{uni.students}</p>
+                                                </td>
+                                                <td className={`px-6 py-4 ${isRtl ? 'text-left' : 'text-right'}`}>
+                                                    <div className={`flex ${isRtl ? 'justify-start' : 'justify-end'} gap-1`}>
+                                                        <button
+                                                            className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+                                                            title={isRtl ? "عرض" : "View"}
+                                                            onClick={() => navigate(`/universities/${uni.category}`)}
+                                                        ><span className="material-symbols-outlined text-lg">open_in_new</span></button>
+                                                        <button onClick={() => handleDeleteUniversity(uni.id)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all" title={isRtl ? "حذف" : "Delete"}><span className="material-symbols-outlined text-lg">delete</span></button>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 text-xs font-bold text-slate-900 dark:text-white">4,200</span>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <p className="text-sm font-medium">{isRtl ? 'د. سارة أحمد' : 'Dr. Sarah Ahmed'}</p>
-                                                <p className="text-[10px] text-slate-500 font-sans tracking-wide">sarah.a@sadat.edu</p>
-                                            </td>
-                                            <td className={`px-6 py-4 ${isRtl ? 'text-left' : 'text-right'}`}>
-                                                <div className={`flex ${isRtl ? 'justify-start' : 'justify-end'} gap-1`}>
-                                                    <button className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all" title={isRtl ? "تعديل" : "Edit"}><span className="material-symbols-outlined text-lg">edit</span></button>
-                                                    <button
-                                                        className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
-                                                        title={isRtl ? "عرض البوابة" : "View Portal"}
-                                                        onClick={() => navigate('/college/computer-science')}
-                                                    ><span className="material-symbols-outlined text-lg">open_in_new</span></button>
-                                                    <button className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all" title={isRtl ? "تعليق" : "Suspend"}><span className="material-symbols-outlined text-lg">block</span></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        {/* Row 2 */}
-                                        <tr className="hover:bg-primary/5 transition-colors group">
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="h-12 w-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 p-1 bg-black/5 dark:bg-white/5">
-                                                        <img alt="Pharmacy" className="w-full h-full object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRDFNpaGhED_0Y5JIM4go2angVFX6ZLe0dIDAg_bRQ0YTJzV7sOHPUrxk_RMTcG7ahZXwJuIxp28uoYODFsQZET1Dy44zW3bDiTDNANWnGUPCk7kzR1nAjzxUIafBNyH3ptwYcETC9KXm11dDjWpAZAT3qO4P6srNMKqsCrGGy-98bpIsl6BCrpoy0UqC7W89v5aoueZqz39J-7Zfl3ldJJz2SKVuQ2ElLA2qOJz08Ef-dJX9j5cf_kvpKJbz7P4Tkqeo1LT7Hy9u0" />
+                                                </td>
+                                            </tr>
+                                        )) : rankings.map((ranking) => (
+                                            <tr key={ranking.slug} className="hover:bg-primary/5 transition-colors group">
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="h-12 w-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 p-1 bg-black/5 dark:bg-white/5 flex items-center justify-center">
+                                                            <span className="material-symbols-outlined text-primary">emoji_events</span>
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-bold text-sm cursor-pointer hover:underline" onClick={() => navigate(`/rankings/${ranking.slug}`)}>
+                                                                {isRtl ? ranking.title : ranking.breadcrumb}
+                                                            </p>
+                                                            <p className="text-[10px] font-bold text-primary uppercase" dir="ltr">Slug: {ranking.slug}</p>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <p className="font-bold text-sm cursor-pointer hover:underline" onClick={() => navigate('/college/pharmacy')}>
-                                                            {isRtl ? 'كلية الصيدلة' : 'Faculty of Pharmacy'}
-                                                        </p>
-                                                        <p className="text-[10px] font-bold text-primary uppercase" dir="ltr">Code: PHR-05</p>
+                                                </td>
+                                                <td className="px-6 py-4 text-center"></td>
+                                                <td className="px-6 py-4 whitespace-nowrap"></td>
+                                                <td className={`px-6 py-4 ${isRtl ? 'text-left' : 'text-right'}`}>
+                                                    <div className={`flex ${isRtl ? 'justify-start' : 'justify-end'} gap-1`}>
+                                                        <button
+                                                            className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+                                                            title={isRtl ? "عرض" : "View"}
+                                                            onClick={() => navigate(`/rankings/${ranking.slug}`)}
+                                                        ><span className="material-symbols-outlined text-lg">open_in_new</span></button>
+                                                        <button onClick={() => handleDeleteRanking(ranking.slug)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all" title={isRtl ? "حذف" : "Delete"}><span className="material-symbols-outlined text-lg">delete</span></button>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 text-xs font-bold text-slate-900 dark:text-white">3,100</span>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <p className="text-sm font-medium">{isRtl ? 'د. محمد علي' : 'Dr. Mohamed Ali'}</p>
-                                                <p className="text-[10px] text-slate-500 font-sans tracking-wide">m.ali@sadat.edu</p>
-                                            </td>
-                                            <td className={`px-6 py-4 ${isRtl ? 'text-left' : 'text-right'}`}>
-                                                <div className={`flex ${isRtl ? 'justify-start' : 'justify-end'} gap-1`}>
-                                                    <button className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all" title={isRtl ? "تعديل" : "Edit"}><span className="material-symbols-outlined text-lg">edit</span></button>
-                                                    <button
-                                                        className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
-                                                        title={isRtl ? "عرض البوابة" : "View Portal"}
-                                                        onClick={() => navigate('/college/pharmacy')}
-                                                    ><span className="material-symbols-outlined text-lg">open_in_new</span></button>
-                                                    <button className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all" title={isRtl ? "تعليق" : "Suspend"}><span className="material-symbols-outlined text-lg">block</span></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        {/* Row 3 */}
-                                        <tr className="hover:bg-primary/5 transition-colors group">
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="h-12 w-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 p-1 bg-black/5 dark:bg-white/5">
-                                                        <img alt="Tourism" className="w-full h-full object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx7vTxw3vr51UKLRTxirsH50fCubw2dolWteHv8GnKFnLcwo0mhBweVb-rhpUX6HXFCaVkr1q3UiSE_GBvIzJGIoa30pd2_yrfQFNZXhiA4YdMyuR7SlEux1bd88xM6W06FxoGaaxuCmunEZKNCKiX_PYerMKjFSjWbiXdCC5CbmtH3FMCWf4mEn4joWPL2y6sdAb9W4jGaC5vT6iHlpuLskGOYNAWmtD5Usg0iLO7feyM1P9wbS9SfN5ufK4McbmrtAn2_Wh0-RXO" />
-                                                    </div>
-                                                    <div>
-                                                        <p className="font-bold text-sm cursor-pointer hover:underline" onClick={() => navigate('/college/tourism')}>
-                                                            {isRtl ? 'كلية السياحة والفنادق' : 'Tourism & Hotel Mgmt'}
-                                                        </p>
-                                                        <p className="text-[10px] font-bold text-primary uppercase" dir="ltr">Code: THM-03</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 text-xs font-bold text-slate-900 dark:text-white">2,800</span>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <p className="text-sm font-medium">{isRtl ? 'د. ليلى حسن' : 'Dr. Laila Hassan'}</p>
-                                                <p className="text-[10px] text-slate-500 font-sans tracking-wide">laila.h@sadat.edu</p>
-                                            </td>
-                                            <td className={`px-6 py-4 ${isRtl ? 'text-left' : 'text-right'}`}>
-                                                <div className={`flex ${isRtl ? 'justify-start' : 'justify-end'} gap-1`}>
-                                                    <button className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all" title={isRtl ? "تعديل" : "Edit"}><span className="material-symbols-outlined text-lg">edit</span></button>
-                                                    <button
-                                                        className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
-                                                        title={isRtl ? "عرض البوابة" : "View Portal"}
-                                                        onClick={() => navigate('/college/tourism')}
-                                                    ><span className="material-symbols-outlined text-lg">open_in_new</span></button>
-                                                    <button className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all" title={isRtl ? "تعليق" : "Suspend"}><span className="material-symbols-outlined text-lg">block</span></button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                                 <div className="p-4 bg-slate-50 dark:bg-white/5 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">

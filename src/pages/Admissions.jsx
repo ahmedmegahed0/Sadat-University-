@@ -32,7 +32,7 @@ export default function Admissions() {
                         </h1>
                         <p className="text-slate-300 text-lg md:text-xl font-medium max-w-2xl mb-12 leading-relaxed">
                             {isRtl
-                                ? 'شكل مستقبلك في جامعة السادات الذكية. نحن نبحث عن عقول مبتكرة وقادة المستقبل. باب التقديم للعام الدراسي 2024 مفتوح الآن.'
+                                ? 'شكل مستقبلك في جامعة السادات الذكية. نحن نبحث عن عقول مبتكرة وقادة المستقبل. باب التقديم للعام الدراسي 2026 مفتوح الآن.'
                                 : 'Shape your future at Sadat Smart University. We are looking for innovative minds and future leaders. Applications for the 2024 academic year are now open.'}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
@@ -230,13 +230,7 @@ export default function Admissions() {
                             <p className="text-slate-400 font-medium mb-8 relative z-10 leading-relaxed">
                                 {isRtl ? 'مسؤولو القبول لدينا هنا لمساعدتك في أي أسئلة قد تكون لديك خلال العملية.' : 'Our admissions officers are here to help you with any questions you may have during the process.'}
                             </p>
-                            <button
-                                onClick={() => navigate('/register')}
-                                className="w-full h-14 bg-primary text-slate-900 font-black rounded-xl hover:bg-primary-600 transition-all duration-300 flex items-center justify-center gap-3 relative z-10 active:scale-95 group/btn"
-                            >
-                                <span className="text-lg">{isRtl ? 'التقديم الآن' : 'APPLY NOW'}</span>
-                                <span className={`material-symbols-outlined transition-transform duration-300 group-hover/btn:${isRtl ? '-translate-x-2' : 'translate-x-2'} ${isRtl ? 'rotate-180' : ''}`}>arrow_forward</span>
-                            </button>
+
                             <div className="mt-6 flex flex-col gap-3 text-sm font-medium text-slate-400 relative z-10">
                                 <span className="flex items-center gap-3 hover:text-white transition-colors cursor-pointer" dir="ltr">
                                     <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">

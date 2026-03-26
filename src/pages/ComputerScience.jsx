@@ -25,10 +25,7 @@ export default function ComputerScience() {
                                     : 'Join the premier institution for Computer Science and Artificial Intelligence at Sadat Smart University. We provide world-class education powered by industry partnerships and innovation.'}
                             </p>
                             <div className="flex flex-wrap gap-4 mt-4">
-                                <button className="flex h-14 items-center justify-center gap-2 rounded-xl bg-primary px-8 text-lg font-black text-slate-900 shadow-xl shadow-primary/30 hover:bg-primary-600 active:scale-95 transition-all group/btn">
-                                    {isRtl ? 'قدم الآن' : 'Apply Now'}
-                                    <span className={`material-symbols-outlined transition-transform duration-300 ${isRtl ? 'group-hover/btn:-translate-x-1 rotate-180' : 'group-hover/btn:translate-x-1'}`}>arrow_forward</span>
-                                </button>
+
                                 <button className="flex h-14 items-center justify-center rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-transparent px-8 text-lg font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all">
                                     {isRtl ? 'عرض البرامج' : 'View Programs'}
                                 </button>
@@ -39,8 +36,8 @@ export default function ComputerScience() {
                                 className="aspect-[4/3] w-full overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-slate-800 shadow-2xl lg:aspect-[4/3]"
                                 style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAGWh_8n57tOTHDinHAtQftm2QeXNAsABl_COjW7qA_4rH-BChX-vI1TXzorlnPjsGiKB_r1h8TVZSv4QvXzOSlk_j6hctqHv-PDyijbs4JsxXa_L076-I0G1MBzNxzL_7ic2dTf55RxKtXc7hRc2Ye0H_btDffe-3kPlfkqc8oXkyRsU-rVyPeQWRuCuc5NFtM1AmX805Kw3NE7gem1BgVqdjf--uRSaDqt42vIr1C1F74IWKvXtanMZy6g5zhuCBXRcmrId1Sax5")', backgroundSize: 'cover', backgroundPosition: 'center' }}
                             ></div>
-                            <div className={`absolute -bottom-8 ${isRtl ? '-right-8' : '-left-8'} hidden h-36 w-36 rounded-2xl bg-slate-900 dark:bg-slate-950 border border-slate-800 p-6 text-white shadow-2xl shadow-slate-900/40 lg:flex lg:flex-col lg:justify-center`}>
-                                <span className="text-4xl font-black text-primary">15+</span>
+                            <div className={`absolute -bottom-8 ${isRtl ? '-right-6' : '-left-6'} hidden h-36 w-36 rounded-2xl bg-slate-800 dark:bg-slate-800 border border-slate-800 p-6 text-white shadow-2xl shadow-slate-900/40 lg:flex lg:flex-col lg:justify-center`}>
+                                <span className="text-4xl font-black text-primary">6+</span>
                                 <span className="text-xs font-bold uppercase tracking-widest leading-tight mt-2 text-slate-400">{isRtl ? 'سنوات من التميز' : 'Years of Excellence'}</span>
                             </div>
                         </div>
@@ -65,7 +62,7 @@ export default function ComputerScience() {
                             <div className="flex flex-col gap-8 w-full">
                                 <div>
                                     <h2 className="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white">{isRtl ? 'رسالة ترحيب العميد' : "Dean's Welcome Message"}</h2>
-                                    <p className="mt-2 text-xl font-bold text-primary">{isRtl ? 'أ.د. عصام الدين' : 'Prof. Dr. Essam Eldin'}</p>
+                                    <p className="mt-2 text-xl font-bold text-primary">{isRtl ? 'أ.د. ابراهيم سليم ' : 'Prof. Dr. Ibrahem Selim'}</p>
                                 </div>
                                 <div className="space-y-6 text-slate-600 dark:text-slate-400 text-lg font-medium leading-relaxed">
                                     <p className="italic">
@@ -130,9 +127,9 @@ export default function ComputerScience() {
                             <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-slate-900 transition-colors">
                                 <span className="material-symbols-outlined text-3xl">security</span>
                             </div>
-                            <h3 className="mb-4 text-2xl font-black text-slate-900 dark:text-white">{isRtl ? 'الأمن السيبراني' : 'Cybersecurity'}</h3>
+                            <h3 className="mb-4 text-2xl font-black text-slate-900 dark:text-white">{isRtl ? ' نظم المعلومات    ' : 'Information System'}</h3>
                             <p className="mb-8 text-base font-medium text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-                                {isRtl ? 'تعلم كيفية تأمين الشبكات وحماية البيانات من التهديدات.' : 'Learn how to secure networks and protect data from threats.'}
+                                {isRtl ? 'تعلم   استخدام نظم المعلومات لحل مشاكل الأعمال.' : 'Learn how to use information systems to solve business problems .'}
                             </p>
                             <a className="flex items-center w-fit gap-2 text-sm font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all" href="#">
                                 {isRtl ? 'استكشف البرنامج' : 'Explore Program'} <span className={`material-symbols-outlined text-lg transition-transform ${isRtl ? 'group-hover:-translate-x-1 rotate-180' : 'group-hover:translate-x-1'}`}>arrow_forward</span>

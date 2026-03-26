@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
+import fcai from '../../assets/fcai.png';
+import medicine from '../../assets/medicine.png';
+import tourest from '../../assets/tourest.png';
 
 export default function Home() {
     const { isRtl } = useThemeContext();
@@ -45,13 +48,13 @@ export default function Home() {
 
                         <div className="mt-10 md:mt-12 flex flex-col sm:flex-row gap-4 md:gap-5 w-full">
                             <Link to="/colleges" className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base md:text-lg font-black text-white transition-all hover:bg-primary-600 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/40 active:scale-95 shrink-0">
-                                {isRtl ? 'استكشف البرامج' : 'Explore Programs'}
+                                {isRtl ? 'استكشف الكليات' : 'Explore Colleges'}
                                 <span className="material-symbols-outlined rtl:-scale-x-100">arrow_forward</span>
                             </Link>
-                            <button className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border-2 border-slate-700 bg-slate-900/50 px-8 py-4 text-base md:text-lg font-bold text-white transition-all hover:border-slate-500 hover:bg-slate-800 backdrop-blur-sm active:scale-95 shrink-0">
+                            {/* <button className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border-2 border-slate-700 bg-slate-900/50 px-8 py-4 text-base md:text-lg font-bold text-white transition-all hover:border-slate-500 hover:bg-slate-800 backdrop-blur-sm active:scale-95 shrink-0">
                                 <span className="material-symbols-outlined">play_circle</span>
                                 {isRtl ? 'جولة افتراضية' : 'Virtual Tour'}
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>
@@ -133,9 +136,9 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
                         {/* College Cards */}
                         <Link to="/college/computer-science" className="group flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-slate-950 shadow-sm border border-slate-100 dark:border-slate-800 transition-all hover:shadow-2xl hover:shadow-primary/5">
-                            <div className="h-64 w-full overflow-hidden relative">
-                                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors z-10"></div>
-                                <img className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAGWh_8n57tOTHDinHAtQftm2QeXNAsABl_COjW7qA_4rH-BChX-vI1TXzorlnPjsGiKB_r1h8TVZSv4QvXzOSlk_j6hctqHv-PDyijbs4JsxXa_L076-I0G1MBzNxzL_7ic2dTf55RxKtXc7hRc2Ye0H_btDffe-3kPlfkqc8oXkyRsU-rVyPeQWRuCuc5NFtM1AmX805Kw3NE7gem1BgVqdjf--uRSaDqt42vIr1C1F74IWKvXtanMZy6g5zhuCBXRcmrId1Sax5" alt="CS & AI" />
+                            <div className="h-64 w-full overflow-hidden relative flex items-center justify-center bg-slate-50 dark:bg-slate-900/50">
+                                <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors z-10"></div>
+                                <img className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={fcai} alt="CS & AI" />
                             </div>
                             <div className="p-8 flex-1 flex flex-col">
                                 <h5 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{isRtl ? 'الحاسبات والذكاء الاصطناعي' : 'Computer Science & AI'}</h5>
@@ -148,12 +151,12 @@ export default function Home() {
                         </Link>
 
                         <Link to="/college/pharmacy" className="group flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-slate-950 shadow-sm border border-slate-100 dark:border-slate-800 transition-all hover:shadow-2xl hover:shadow-primary/5">
-                            <div className="h-64 w-full overflow-hidden relative">
-                                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors z-10"></div>
-                                <img className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG3NRd5Nv86h6p-HJQ-Y7pfYGHE-_B12Ghq4mP6d0oLsXr8oJ3D8MQAdlUNpgfCvDE_q2NF4mHkk0gesjwxoKsjvKQtVzX3XjredwIPzpdWkIiMZjcJSxcd_xoJC25Wd2B7C1wWWjCzUrHzDOhYWsq77MwC5DOZKS3g6ZRn7xmYmnfPp4eGg-ar-e3MmgfZ-xJVJUTwJRvO3SYi2xCc8YI8DOpPISEia7_WDRWhF9Ef9yQQYH3nGItYqvZemIwjxuXiOdRIFqWHlCs" alt="Pharmacy" />
+                            <div className="h-64 w-full overflow-hidden relative flex items-center justify-center bg-slate-50 dark:bg-slate-900/50">
+                                <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors z-10"></div>
+                                <img className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={medicine} alt="Pharmacy" />
                             </div>
                             <div className="p-8 flex-1 flex flex-col">
-                                <h5 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{isRtl ? 'الصيدلة الإكلينيكية' : 'Clinical Pharmacy'}</h5>
+                                <h5 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{isRtl ? 'الصيدلة' : ' Pharmacy'}</h5>
                                 <p className="mt-3 text-slate-500 dark:text-slate-400 line-clamp-2">{isRtl ? 'ريادة مجالات الطب وتركيب الأدوية وتحسين الرعاية.' : 'Pioneering medical sciences, drug formulation, and care improvement.'}</p>
                                 <div className="mt-auto pt-6 flex items-center justify-between text-primary font-bold">
                                     <span className="text-sm uppercase tracking-wider">{isRtl ? 'اكتشف الكلية' : 'Explore Faculty'}</span>
@@ -163,9 +166,9 @@ export default function Home() {
                         </Link>
 
                         <Link to="/college/tourism" className="group flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-slate-950 shadow-sm border border-slate-100 dark:border-slate-800 transition-all hover:shadow-2xl hover:shadow-primary/5">
-                            <div className="h-64 w-full overflow-hidden relative">
-                                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors z-10"></div>
-                                <img className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvBurROYMOP23U_Uf0Y670xNrlQgWBj_TWFM6UtNPTVOtzGG2pkscoN_DBeS6NDVvorlnlUTMizYQ8by2C06bIUQQZPCMyRQb_9CETiMRHfqFhSSTl__vxCjyO6Cl5LAoMvkHerrAzEbCuD0Bvete8LUMpb11SZMqDNoVTOALdbAscPx0Hi4MLP9DZUmtRL0elhz94rTLAyZ9C-tKYm58U6Xol5CN9pcTU43pfwqYJl4yQkjjiz1BA4pzcSmizqljm3ri28sf13_Zc" alt="Tourism" />
+                            <div className="h-64 w-full overflow-hidden relative flex items-center justify-center bg-slate-50 dark:bg-slate-900/50">
+                                <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors z-10"></div>
+                                <img className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={tourest} alt="Tourism" />
                             </div>
                             <div className="p-8 flex-1 flex flex-col">
                                 <h5 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{isRtl ? 'السياحة والفنادق' : 'Tourism & Hotels'}</h5>

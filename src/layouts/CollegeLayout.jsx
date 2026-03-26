@@ -68,7 +68,7 @@ export default function CollegeLayout({ children, collegeName, collegeIcon, coll
             {/* Footer */}
             <footer className="bg-white dark:bg-gray-900 border-t-2 border-primary/10 py-12 transition-colors duration-300">
                 <div className="mx-auto max-w-7xl px-6">
-                    <div className="grid gap-12 lg:grid-cols-4">
+                    <div className="grid gap-12 lg:grid-cols-3">
                         <div className="flex flex-col gap-4">
                             <div className="flex items-center gap-2">
                                 <span className="material-symbols-outlined text-primary text-3xl">
@@ -107,13 +107,6 @@ export default function CollegeLayout({ children, collegeName, collegeIcon, coll
                                 <li><a className="hover:text-primary transition-colors" href="#">{isRtl ? 'مركز البحوث' : 'Research Center'}</a></li>
                                 <li><a className="hover:text-primary transition-colors" href="#">{isRtl ? 'الخدمات المهنية' : 'Career Services'}</a></li>
                             </ul>
-                        </div>
-                        <div>
-                            <h5 className="mb-4 text-sm font-bold uppercase tracking-widest text-primary">{isRtl ? 'خريطة الموقع' : 'Location Map'}</h5>
-                            <div
-                                className="h-32 w-full rounded-lg bg-slate-200 dark:bg-gray-800"
-                                style={{ backgroundImage: 'linear-gradient(135deg, rgba(var(--color-primary-500), 0.1) 25%, transparent 25%), linear-gradient(225deg, rgba(var(--color-primary-500), 0.1) 25%, transparent 25%), linear-gradient(45deg, rgba(var(--color-primary-500), 0.1) 25%, transparent 25%), linear-gradient(315deg, rgba(var(--color-primary-500), 0.1) 25%, transparent 25%)', backgroundPosition: '10px 0, 10px 0, 0 0, 0 0', backgroundSize: '20px 20px', backgroundRepeat: 'repeat' }}
-                            ></div>
                         </div>
                     </div>
                     <div className="mt-12 border-t border-slate-100 dark:border-gray-800 pt-8 text-center text-xs text-slate-500 dark:text-slate-400">

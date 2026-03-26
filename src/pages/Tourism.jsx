@@ -25,10 +25,7 @@ export default function Tourism() {
                                     : 'Join the premier institution for hospitality management and tourism studies at Sadat Smart University. We provide world-class education powered by industry partnerships and innovation.'}
                             </p>
                             <div className="flex flex-wrap gap-5 mt-4">
-                                <button className="flex h-14 items-center justify-center gap-2 rounded-xl bg-primary px-8 text-lg font-black text-slate-900 shadow-xl shadow-primary/30 hover:bg-primary-600 active:scale-95 transition-all group/btn">
-                                    {isRtl ? 'قدم الآن' : 'Apply Now'}
-                                    <span className={`material-symbols-outlined transition-transform duration-300 ${isRtl ? 'group-hover/btn:-translate-x-1 rotate-180' : 'group-hover/btn:translate-x-1'}`}>arrow_forward</span>
-                                </button>
+
                                 <button className="flex h-14 items-center justify-center rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-transparent px-8 text-lg font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all">
                                     {isRtl ? 'عرض البرامج' : 'View Programs'}
                                 </button>

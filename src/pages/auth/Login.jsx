@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
+import loginBanner from '../../assets/login-banner.png';
 
 export default function Login() {
     const { isRtl } = useThemeContext();
@@ -25,7 +26,7 @@ export default function Login() {
                 <img
                     alt="University Campus"
                     className="absolute inset-0 w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHGENukDSHgzKnTU5_wvCc552yPr6o8hJqu1vCWFoRmBJtbGQYB1C3akzytU2lBmyZDKgFED2qEhz8VsuBlipPrDnI125xFRcksYWh1HOVpe-JrCgBFggj09rBSYHS2bqOFhr1tBY1VrOY8NMslkEOyKlGaPrp-I-sWcUGRc3mgg_qHaUXHDWgJgUkhq1AuWkLcl0Sd7IlMPQdskzlT_ykO1IAgfb10Kub_1ZJvI8Fz3mWgqtU6jHnTt62tOKwJsdZ7Oboih04RuR2"
+                    src={loginBanner}
                 />
                 <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
                 <div className="absolute inset-0 flex flex-col justify-end p-16 text-white bg-gradient-to-t from-black/80 to-transparent">

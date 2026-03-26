@@ -1,6 +1,6 @@
 import React from 'react';
 import { useThemeContext } from '../context/ThemeContext';
-
+import naser from '../assets/naser.png';
 export default function About() {
     const { isRtl } = useThemeContext();
 
@@ -20,7 +20,7 @@ export default function About() {
                         {isRtl ? 'تراثنا' : 'Our Heritage'}
                     </h1>
                     <p className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed max-w-2xl mx-auto">
-                        {isRtl ? 'إرث من التميز والابتكار والقيادة في التعليم منذ عام 1970.' : 'A legacy of excellence, innovation, and leadership in education since 1970.'}
+                        {isRtl ? 'إرث من التميز والابتكار والقيادة في التعليم منذ عام 2013.' : 'A legacy of excellence, innovation, and leadership in education since 2013.'}
                     </p>
                 </div>
             </div>
@@ -75,7 +75,7 @@ export default function About() {
                                 <img
                                     className="rounded-3xl shadow-2xl w-full h-[600px] object-cover"
                                     alt={isRtl ? "صورة لرئيس الجامعة بأزياء رسمية" : "Portrait of the University President in formal attire"}
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOWJHA61NiNiV8kWBpO-1DYpqh5uZLVj05QxqyYyVJ8KkeEYdICFx6yZFb5F7UA30GlreNP9ier7COiyXGsGXhvkGIbKp1WAA4hOIpTsemmwbJRUz-Gt_hW-Hb63-4y0TfXR4F-wW0Dj_MlTMzXzbEakdFiUchldHJ_2VD0-Ln7nLcLXsI6uOJ8SP7qkdpiNyAbRV6nistFr52IJNmvbCnsBpyzfAk0cPEgfhbgHGyucJYwPfPaFWG059_Xo0zRobScV9_wT-R7lFc"
+                                    src={naser}
                                 />
                             </div>
                         </div>
@@ -163,12 +163,12 @@ export default function About() {
                         {/* Timeline Items */}
                         <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0">
                             <div className={`md:w-5/12 ${isRtl ? 'md:text-left md:pl-16' : 'md:text-right md:pr-16'} text-center md:block`}>
-                                <h5 className="text-3xl font-black text-primary mb-2">1970</h5>
+                                <h5 className="text-3xl font-black text-primary mb-2">2013</h5>
                                 <p className="text-slate-900 dark:text-white font-bold text-lg">{isRtl ? 'تأسيس معهد السادات' : 'Foundation of Sadat Institute'}</p>
                             </div>
                             <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-950 border-4 border-primary shadow-lg shadow-primary/20 shrink-0"></div>
                             <div className={`md:w-5/12 ${isRtl ? 'md:pr-16 md:text-right' : 'md:pl-16 md:text-left'} text-center md:block`}>
-                                <div className="md:hidden text-primary font-black text-2xl mb-2">1970</div>
+                                <div className="md:hidden text-primary font-black text-2xl mb-2">2013</div>
                                 <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
                                     {isRtl ? 'تأسس كمعهد فني يركز على الهندسة والعلوم التطبيقية لخدمة الصناعة المحلية.' : 'Founded as a technical institute focusing on engineering and applied sciences to serve the local industry.'}
                                 </p>
@@ -177,26 +177,26 @@ export default function About() {
 
                         <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0">
                             <div className={`md:w-5/12 ${isRtl ? 'md:text-right md:pr-16' : 'md:text-left md:pl-16'} text-center md:block order-last md:order-first`}>
-                                <div className="md:hidden text-primary font-black text-2xl mb-2">1995</div>
+                                <div className="md:hidden text-primary font-black text-2xl mb-2">2013</div>
                                 <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
                                     {isRtl ? 'حصلت المؤسسة على وضع جامعة كامل من وزارة التعليم العالي، مع التوسع في الأعمال.' : 'The institution received full university status from the Ministry of Higher Education, expanding rapidly.'}
                                 </p>
                             </div>
                             <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-950 border-4 border-primary shadow-lg shadow-primary/20 shrink-0 order-2"></div>
                             <div className={`md:w-5/12 ${isRtl ? 'md:text-left md:pl-16' : 'md:text-right md:pr-16'} text-center md:block order-first md:order-last`}>
-                                <h5 className="text-3xl font-black text-primary mb-2 hidden md:block">1995</h5>
+                                <h5 className="text-3xl font-black text-primary mb-2 hidden md:block">2013</h5>
                                 <p className="text-slate-900 dark:text-white font-bold text-lg">{isRtl ? 'منح ميثاق الجامعة' : 'University Charter Granted'}</p>
                             </div>
                         </div>
 
                         <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0">
                             <div className={`md:w-5/12 ${isRtl ? 'md:text-left md:pl-16' : 'md:text-right md:pr-16'} text-center md:block`}>
-                                <h5 className="text-3xl font-black text-primary mb-2 hidden md:block">2015</h5>
+                                <h5 className="text-3xl font-black text-primary mb-2 hidden md:block">2020</h5>
                                 <p className="text-slate-900 dark:text-white font-bold text-lg">{isRtl ? 'تحول الحرم الجامعي الذكي' : 'Smart Campus Transformation'}</p>
                             </div>
                             <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-950 border-4 border-primary shadow-lg shadow-primary/20 shrink-0"></div>
                             <div className={`md:w-5/12 ${isRtl ? 'md:pr-16 md:text-right' : 'md:pl-16 md:text-left'} text-center md:block`}>
-                                <div className="md:hidden text-primary font-black text-2xl mb-2">2015</div>
+                                <div className="md:hidden text-primary font-black text-2xl mb-2">2020</div>
                                 <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
                                     {isRtl ? 'إطلاق مبادرة "التعليم الذكي"، ودمج الذكاء الاصطناعي في المناهج الأكاديمية.' : 'Inception of the "Smart Education" initiative, integrating AI and cloud computing curriculums.'}
                                 </p>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
+import registerBanner from '../../assets/register-banner.png';
 
 export default function Register() {
     const { isRtl } = useThemeContext();
@@ -11,10 +12,11 @@ export default function Register() {
         navigate('/login');
     };
 
+
     return (
         <div className="flex w-full min-h-[calc(100vh-80px)]">
             {/* Left Form Area (Right in RTL) */}
-            <div className="w-full lg:w-[45%] xl:w-[40%] h-full overflow-y-auto bg-white dark:bg-gray-900 px-8 md:px-16 lg:px-20 py-12 flex flex-col justify-center">
+            <div className="w-full lg:w-[45%] xl:w-[40%] overflow-y-auto bg-white dark:bg-gray-900 px-8 md:px-16 lg:px-20 py-12 flex flex-col justify-center">
                 <div className="max-w-md mx-auto w-full">
                     <div className="mb-10">
                         <h2 className="text-4xl font-black text-slate-900 dark:text-white mb-2">
@@ -127,11 +129,11 @@ export default function Register() {
             </div>
 
             {/* Right side Image (Left in RTL) */}
-            <div className="hidden lg:block relative flex-1 h-full overflow-hidden">
+            <div className="hidden lg:block relative flex-1 overflow-hidden">
                 <img
                     alt="Students in a modern lab"
                     className="absolute inset-0 w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMqXTll4NqJS00Bm2tRMr-tH7tPRv76jIvuBrWxLQIcw6f3XfAj4-I7mRNy3zB_mRJoZEXHBsM1pBPMgz931VtxZQxDBsIFCZFEdxwEWn3z_5do24agJqrsEkQr-H-sQl1x92K5PHa5P0f9FHMR0RAFgV_cST1KX8CwuN6ShPql_j3kW0pm5iq5jhSWi5PvuL60hLfS_zCCn2zPxbivTqyUeXl3YbMh83AE3DyGN4iG-uGVKRebqCjMuUOIPTahba6p7DKiCzV_qHm"
+                    src={registerBanner}
                 />
                 <div className="absolute inset-0 bg-primary/80 mix-blend-multiply"></div>
                 <div className="absolute inset-0 flex flex-col justify-end p-20 text-white z-10 bg-gradient-to-t from-black/60 to-transparent">

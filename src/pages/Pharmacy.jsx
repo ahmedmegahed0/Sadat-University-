@@ -169,10 +169,7 @@ export default function Pharmacy() {
                                     : 'Join a community of scholars and practitioners who are redefining the boundaries of medicine and patient care.'}
                             </p>
                             <div className="flex flex-col sm:flex-row justify-center gap-6">
-                                <button className="flex min-w-[220px] items-center justify-center gap-2 bg-primary text-slate-900 px-10 h-14 rounded-xl font-black text-lg hover:bg-primary-600 active:scale-95 transition-all shadow-xl shadow-primary/30 group/btn">
-                                    {isRtl ? 'قدم الآن' : 'Apply Now'}
-                                    <span className={`material-symbols-outlined transition-transform duration-300 ${isRtl ? 'group-hover/btn:-translate-x-2 rotate-180' : 'group-hover/btn:translate-x-2'}`}>arrow_forward</span>
-                                </button>
+
                                 <button className="flex min-w-[220px] items-center justify-center h-14 border border-white/20 bg-white/5 backdrop-blur-md text-white px-10 rounded-xl font-bold text-lg hover:bg-white/10 transition-all">
                                     {isRtl ? 'طلب معلومات' : 'Request Information'}
                                 </button>
