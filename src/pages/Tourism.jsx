@@ -1,8 +1,23 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useThemeContext } from '../context/ThemeContext';
+import { useCollegeContext } from '../context/CollegeContext';
+import { useFacultyContext } from '../context/FacultyContext';
+import FacultyCard from '../components/faculty/FacultyCard';
 
 export default function Tourism() {
     const { isRtl } = useThemeContext();
+    const { colleges } = useCollegeContext();
+    const { facultyList } = useFacultyContext();
+    const college = colleges['tourism'];
+    
+    const filteredFaculty = facultyList.filter(f => f.colleges && f.colleges.includes('tourism'))
+        .sort((a, b) => {
+            if (a.role === 'doctor' && b.role !== 'doctor') return -1;
+            if (a.role !== 'doctor' && b.role === 'doctor') return 1;
+            return 0;
+        })
+        .slice(0, 4);
 
     return (
         <>
@@ -56,7 +71,7 @@ export default function Tourism() {
                             <div className="relative shrink-0">
                                 <div
                                     className="h-72 w-72 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800"
-                                    style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqVQG4Ze0I0MM3eHUBsm4pQF0C9s4bVE6OA5IoMZKys08hEX2Lyvqdn4cvOF8sBBv73gLq3OWsTfu-TuvPOfsjVZxB6NuNASOyITbCs5N0Vn6ENV823RU5FKgVT17y_Zta7DxKHZpK8YjJzIhbdciNkkXc0P5kNvllHUTNQbNGx28GWhT6E5Rllbhn047c8cD0WOOJ1wQU9uwFkxbvKN8DVi0GTcpvABAYlgNnX0xBj9gnBQvCboUMu4VaZdro6cLwLtWLDIpR6q8x")', backgroundSize: 'cover', backgroundPosition: 'center' }}
+                                    style={{ backgroundImage: `url("${college?.deanSection?.image || ''}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                                 ></div>
                                 <div className={`absolute -bottom-6 ${isRtl ? '-left-6' : '-right-6'} flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-slate-900 shadow-xl shadow-primary/20`}>
                                     <span className="material-symbols-outlined text-3xl">format_quote</span>
@@ -65,13 +80,11 @@ export default function Tourism() {
                             <div className="flex flex-col gap-8 w-full">
                                 <div>
                                     <h2 className="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white">{isRtl ? 'رسالة ترحيب العميد' : 'Dean\'s Welcome Message'}</h2>
-                                    <p className="mt-2 text-xl font-bold text-primary">{isRtl ? 'أ.د. أحمد المنصور' : 'Prof. Dr. Ahmed Al-Mansour'}</p>
+                                    <p className="mt-2 text-xl font-bold text-primary">{isRtl ? college?.deanSection?.nameAr : college?.deanSection?.name}</p>
                                 </div>
                                 <div className="space-y-6 text-slate-600 dark:text-slate-400 text-lg font-medium leading-relaxed">
                                     <p className="italic">
-                                        {isRtl
-                                            ? '"مرحباً بكم في كلية السياحة والفنادق بجامعة السادات الذكية. مهمتنا هي تنمية القيادة والابتكار في قطاع الضيافة المتطور باستمرار. نحن نجمع بين التميز النظري وجهات النظر العالمية العملية لإعداد طلابنا مهنياً لحياة حافلة بالنجاح."'
-                                            : '"Welcome to the Faculty of Tourism & Hotels at Sadat Smart University. Our mission is to cultivate leadership and innovation in the ever-evolving hospitality sector. We combine theoretical excellence with practical global perspectives to prepare our students for rewarding careers in the world\'s most dynamic industry."'}
+                                        "{isRtl ? college?.deanSection?.messageAr : college?.deanSection?.message}"
                                     </p>
                                     <p className="hidden sm:block">
                                         {isRtl
@@ -97,48 +110,49 @@ export default function Tourism() {
                         <div className="mx-auto mt-6 h-1.5 w-24 rounded-full bg-primary"></div>
                     </div>
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {/* Dept 1 */}
-                        <div className="group flex flex-col rounded-[2rem] border border-slate-100 bg-white p-10 transition-all hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800 dark:bg-slate-950/50 hover:-translate-y-1">
-                            <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-slate-900 transition-colors">
-                                <span className="material-symbols-outlined text-3xl">hotel</span>
+                        {college?.departments?.map(dept => (
+                            <div key={dept.id} className="group flex flex-col rounded-[2rem] border border-slate-100 bg-white p-10 transition-all hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800 dark:bg-slate-950/50 hover:-translate-y-1">
+                                <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-slate-900 transition-colors">
+                                    <span className="material-symbols-outlined text-3xl">{dept.icon || 'hotel'}</span>
+                                </div>
+                                <h3 className="mb-4 text-2xl font-black text-slate-900 dark:text-white">{isRtl ? dept.nameAr : dept.name}</h3>
+                                <p className="mb-8 text-base font-medium text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
+                                    {isRtl ? dept.descriptionAr : dept.description}
+                                </p>
+                                <a className="flex items-center w-fit gap-2 text-sm font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all" href="#">
+                                    {isRtl ? 'استكشف البرنامج' : 'Explore Program'} <span className={`material-symbols-outlined text-lg transition-transform ${isRtl ? 'group-hover:-translate-x-1 rotate-180' : 'group-hover:translate-x-1'}`}>arrow_forward</span>
+                                </a>
                             </div>
-                            <h3 className="mb-4 text-2xl font-black text-slate-900 dark:text-white">{isRtl ? 'إدارة الفنادق' : 'Hotel Management'}</h3>
-                            <p className="mb-8 text-base font-medium text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-                                {isRtl ? 'أتقن فن عمليات الضيافة، إدارة المكاتب الأمامية لإدارة المنتجعات الفاخرة.' : 'Master the art of hospitality operations, from front office management to luxury resort administration.'}
-                            </p>
-                            <a className="flex items-center w-fit gap-2 text-sm font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all" href="#">
-                                {isRtl ? 'استكشف البرنامج' : 'Explore Program'} <span className={`material-symbols-outlined text-lg transition-transform ${isRtl ? 'group-hover:-translate-x-1 rotate-180' : 'group-hover:translate-x-1'}`}>arrow_forward</span>
-                            </a>
-                        </div>
-
-                        {/* Dept 2 */}
-                        <div className="group flex flex-col rounded-[2rem] border border-slate-100 bg-white p-10 transition-all hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800 dark:bg-slate-950/50 hover:-translate-y-1">
-                            <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-slate-900 transition-colors">
-                                <span className="material-symbols-outlined text-3xl">restaurant</span>
-                            </div>
-                            <h3 className="mb-4 text-2xl font-black text-slate-900 dark:text-white">{isRtl ? 'الدراسات السياحية' : 'Tourism Studies'}</h3>
-                            <p className="mb-8 text-base font-medium text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-                                {isRtl ? 'تحليل اتجاهات السفر العالمية، وتنمية السياحة المستدامة، واستراتيجيات تسويق الوجهات.' : 'Analyze global travel trends, sustainable tourism development, and destination marketing strategies.'}
-                            </p>
-                            <a className="flex items-center w-fit gap-2 text-sm font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all" href="#">
-                                {isRtl ? 'استكشف البرنامج' : 'Explore Program'} <span className={`material-symbols-outlined text-lg transition-transform ${isRtl ? 'group-hover:-translate-x-1 rotate-180' : 'group-hover:translate-x-1'}`}>arrow_forward</span>
-                            </a>
-                        </div>
-
-                        {/* Dept 3 */}
-                        <div className="group flex flex-col rounded-[2rem] border border-slate-100 bg-white p-10 transition-all hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800 dark:bg-slate-950/50 hover:-translate-y-1">
-                            <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-slate-900 transition-colors">
-                                <span className="material-symbols-outlined text-3xl">stadium</span>
-                            </div>
-                            <h3 className="mb-4 text-2xl font-black text-slate-900 dark:text-white">{isRtl ? 'الفعاليات والمؤتمرات' : 'Event & Convention'}</h3>
-                            <p className="mb-8 text-base font-medium text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-                                {isRtl ? 'تدريب مهني على تنظيم المؤتمرات الدولية والأحداث الرياضية والمهرجانات الكبرى.' : 'Professional training in organizing international conferences, sporting events, and large-scale festivals.'}
-                            </p>
-                            <a className="flex items-center w-fit gap-2 text-sm font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all" href="#">
-                                {isRtl ? 'استكشف البرنامج' : 'Explore Program'} <span className={`material-symbols-outlined text-lg transition-transform ${isRtl ? 'group-hover:-translate-x-1 rotate-180' : 'group-hover:translate-x-1'}`}>arrow_forward</span>
-                            </a>
-                        </div>
+                        ))}
                     </div>
+                </div>
+            </section>
+
+            {/* Faculty Staff Section Preview */}
+            <section className="py-24 bg-slate-50 dark:bg-slate-950 transition-colors">
+                <div className="mx-auto max-w-7xl px-6">
+                    <div className="mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div>
+                            <h2 className="text-4xl font-black text-slate-900 dark:text-white capitalize">{isRtl ? 'هيئة التدريس' : 'Faculty Staff'}</h2>
+                            <div className="mt-4 h-1.5 w-24 rounded-full bg-primary"></div>
+                        </div>
+                        <a href={`/college/tourism/faculty`} className="flex items-center gap-2 group bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-primary dark:hover:text-primary px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary shadow-sm font-bold transition-all">
+                            {isRtl ? 'عرض الكل' : 'View All'}
+                            <span className={`material-symbols-outlined transition-transform ${isRtl ? 'group-hover:-translate-x-1 rotate-180' : 'group-hover:translate-x-1'}`}>arrow_forward</span>
+                        </a>
+                    </div>
+                    
+                    {filteredFaculty.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {filteredFaculty.map(member => (
+                                <FacultyCard key={member.id} member={member} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-12 text-slate-500">
+                            {isRtl ? 'لم يتم إضافة أعضاء هيئة تدريس بعد.' : 'No faculty members added yet.'}
+                        </div>
+                    )}
                 </div>
             </section>
         </>

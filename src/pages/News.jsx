@@ -1,10 +1,16 @@
 import React from 'react';
 import { useThemeContext } from '../context/ThemeContext';
+import { useGlobalData } from '../context/GlobalDataContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function News() {
     const { isRtl } = useThemeContext();
+    const { news } = useGlobalData();
     const navigate = useNavigate();
+
+    const latestNews = news ? [...news].reverse() : [];
+    const featuredNews = latestNews.length > 0 ? latestNews[0] : null;
+    const gridNews = latestNews.slice(1);
 
     return (
         <div className="flex flex-col w-full min-h-screen">
@@ -29,39 +35,32 @@ export default function News() {
                 </nav>
 
                 {/* Featured Story Section */}
-                <section className="mb-16">
-                    <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 aspect-[21/9] min-h-[450px] group cursor-pointer shadow-2xl shadow-slate-200/50 dark:shadow-none hover:shadow-primary/20 transition-all duration-500 border border-slate-100 dark:border-slate-800">
-                        <div
-                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                            alt="Modern university campus building with glass facade"
-                            style={{ backgroundImage: 'linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 50%, transparent 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDU3Kt2n6shW3Bqn08dCNPMwiv7Ulx0B0DpbjCxpKHbWh4W3ZvrrWn9YZTdXuhyB3AhvGR5xFtt2dFrgtBUZ9UJwXvNu4EyWY_l09NWQ7znkcxm4TwE7YeRPNNEGxCituQB--uwRIs-_J3VyZjAFp6NHbj9WSy4jcx0lIj4wkYB9d3chJef0YIZg0d_qHJLv8QtAu9fdH2l_-3LBe6476DleEXkDirHkQU4DcQN_Z7_Ko-WQQfXDLhmLfd-kweVnS0ifldBGVfhVl2c")' }}
-                        ></div>
-                        <div className={`absolute bottom-0 ${isRtl ? 'right-0' : 'left-0'} p-6 sm:p-10 md:p-16 flex flex-col items-start gap-4 sm:gap-5 z-10 w-full`}>
-                            <span className="bg-primary/20 border border-primary/30 text-primary text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full backdrop-blur-md">
-                                {isRtl ? 'تأثير عالمي' : 'Global Impact'}
-                            </span>
-                            <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] max-w-4xl tracking-tight break-words">
-                                {isRtl
-                                    ? 'اخبار وفعاليات جامعه مدينه السادات'
-                                    : 'News and events of Sadat City University'}
-                            </h1>
-                            {/* <p className="text-slate-300 text-lg md:text-xl font-medium max-w-3xl line-clamp-2 md:line-clamp-none">
-                                {isRtl
-                                    ? 'بالتعاون مع قادة التكنولوجيا الدوليين، تقود جامعتنا مشروعًا مدته عقد من الزمان لإحداث ثورة في حلول تخزين الطاقة الخضراء للمدن الذكية الحضرية.'
-                                    : 'In collaboration with international tech leaders, our university is pioneering a decade-long project to revolutionize green energy storage solutions for urban smart cities.'}
-                            </p> */}
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mt-4 w-full sm:w-auto">
-                                <span className="flex items-center gap-2 text-white/80 text-sm font-bold bg-slate-900/50 backdrop-blur-md px-4 py-2 rounded-xl w-fit">
-                                    <span className="material-symbols-outlined text-[18px]">calendar_today</span> {isRtl ? '20 أكتوبر 2026' : 'October 20, 2026'}
+                {featuredNews && (
+                    <section className="mb-16">
+                        <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 aspect-[21/9] min-h-[450px] group cursor-pointer shadow-2xl shadow-slate-200/50 dark:shadow-none hover:shadow-primary/20 transition-all duration-500 border border-slate-100 dark:border-slate-800">
+                            <div
+                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                                style={{ backgroundImage: `linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 50%, transparent 100%), url("${featuredNews.image || 'https://images.unsplash.com/photo-1541888081688-ea121a55b0a7?q=80&w=2070'}")` }}
+                            ></div>
+                            <div className={`absolute bottom-0 ${isRtl ? 'right-0' : 'left-0'} p-6 sm:p-10 md:p-16 flex flex-col items-start gap-4 sm:gap-5 z-10 w-full`}>
+                                <span className="bg-primary/20 border border-primary/30 text-primary text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full backdrop-blur-md">
+                                    {isRtl ? 'أبرز الأخبار' : 'Featured Story'}
                                 </span>
-                                {/* <button className={`w-full sm:w-auto justify-center bg-primary hover:bg-primary-600 text-slate-900 font-black py-4 px-8 rounded-xl transition-all flex items-center gap-2 group/btn shadow-xl shadow-primary/20`}>
-                                    {isRtl ? 'قراءة القصة كاملة' : 'Read Full Story'}
-                                    <span className={`material-symbols-outlined transition-transform ${isRtl ? 'group-hover/btn:-translate-x-1 rotate-180' : 'group-hover/btn:translate-x-1'}`}>arrow_forward</span>
-                                </button> */}
+                                <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] max-w-4xl tracking-tight break-words">
+                                    {isRtl ? featuredNews.titleAr : featuredNews.titleEn}
+                                </h1>
+                                <p className="text-slate-300 text-lg md:text-xl font-medium max-w-3xl line-clamp-2 md:line-clamp-none">
+                                    {isRtl ? featuredNews.summaryAr : featuredNews.summaryEn}
+                                </p>
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mt-4 w-full sm:w-auto">
+                                    <span className="flex items-center gap-2 text-white/80 text-sm font-bold bg-slate-900/50 backdrop-blur-md px-4 py-2 rounded-xl w-fit">
+                                        <span className="material-symbols-outlined text-[18px]">calendar_today</span> {featuredNews.date}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                )}
 
                 <div className="flex flex-col lg:flex-row gap-12">
                     {/* Latest News Grid */}
@@ -78,109 +77,29 @@ export default function News() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {/* News Card 1 */}
-                            <article className="bg-white dark:bg-slate-950 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:border-primary/30 transition-all group cursor-pointer flex flex-col hover:-translate-y-1">
-                                <div
-                                    className="aspect-video bg-cover bg-center overflow-hidden transition-transform duration-700 group-hover:scale-105"
-                                    alt="Students collaborating in a high-tech university lab"
-                                    style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxsHEjefKj9Y0NpJfap6P4U2THT-HvfxMgmKxYSEex1karPkYkqeiYYpNbseb1NgaN2aJJ-9d1pCDJLOihVpoaVppLXQSWyIVwuRpGE_hppHgrxy7CLs8fm20eAulD7zi6WT7D-elFe3q44SP_rwUotC3AK8kZ2zqbrifpd16x1CMzPpiitR-KlR1ZPnElyN3MhO4ArnMXIrjN03ghKcEHtV0yO-fZFka4KcQpAPKhuzpPT4Ny0dKNHEi8fv-z5i8pWqp8eTRLpn5B")' }}
-                                ></div>
-                                <div className="p-8 flex flex-col flex-1">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-primary bg-primary/10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-primary/20">{isRtl ? 'أبحاث' : 'Research'}</span>
-                                        <span className="text-slate-500 dark:text-slate-400 font-medium text-sm" dir="ltr">Oct 22, 2024</span>
+                            {gridNews.map(n => (
+                                <article key={n.id} className="bg-white dark:bg-slate-950 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:border-primary/30 transition-all group cursor-pointer flex flex-col hover:-translate-y-1">
+                                    <div
+                                        className="aspect-video bg-cover bg-center overflow-hidden transition-transform duration-700 group-hover:scale-105"
+                                        style={{ backgroundImage: `url("${n.image || 'https://images.unsplash.com/photo-1541888081688-ea121a55b0a7?q=80&w=2070'}")` }}
+                                    ></div>
+                                    <div className="p-8 flex flex-col flex-1">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <span className="text-primary bg-primary/10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-primary/20">{isRtl ? 'أخبار' : 'News'}</span>
+                                            <span className="text-slate-500 dark:text-slate-400 font-medium text-sm" dir="ltr">{n.date}</span>
+                                        </div>
+                                        <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-primary transition-colors leading-[1.3] break-words">
+                                            {isRtl ? n.titleAr : n.titleEn}
+                                        </h3>
+                                        <p className="text-slate-600 dark:text-slate-400 text-base font-medium leading-relaxed mb-6 line-clamp-3 flex-1">
+                                            {isRtl ? n.summaryAr : n.summaryEn}
+                                        </p>
+                                        <span className="bg-slate-50 dark:bg-slate-900 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-sm flex items-center gap-2 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all w-fit">
+                                            {isRtl ? 'قراءة المزيد' : 'Read More'} <span className={`material-symbols-outlined text-base ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>arrow_forward</span>
+                                        </span>
                                     </div>
-                                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-primary transition-colors leading-[1.3] break-words">
-                                        {isRtl ? 'كلية الذكاء الاصطناعي تفوز بجائزة الابتكار العالمية' : 'AI Faculty wins Top Global Innovation Award'}
-                                    </h3>
-                                    <p className="text-slate-600 dark:text-slate-400 text-base font-medium leading-relaxed mb-6 line-clamp-3 flex-1">
-                                        {isRtl
-                                            ? 'تم تكريم قسم الذكاء الاصطناعي لدينا لعمله الرائد في معالجة اللغات الطبيعية للغات الأصلية...'
-                                            : 'Our Artificial Intelligence department has been recognized for its groundbreaking work in natural language processing for indigenous languages...'}
-                                    </p>
-                                    <span className="bg-slate-50 dark:bg-slate-900 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-sm flex items-center gap-2 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all w-fit">
-                                        {isRtl ? 'قراءة المزيد' : 'Read More'} <span className={`material-symbols-outlined text-base ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>arrow_forward</span>
-                                    </span>
-                                </div>
-                            </article>
-
-                            {/* News Card 2 */}
-                            <article className="bg-white dark:bg-slate-950 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:border-primary/30 transition-all group cursor-pointer flex flex-col hover:-translate-y-1">
-                                <div
-                                    className="aspect-video bg-cover bg-center overflow-hidden transition-transform duration-700 group-hover:scale-105"
-                                    alt="Graduation ceremony with students throwing caps"
-                                    style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtMnZB5MKPfDUCQ3tVrXqaQumtMpAGv2cUzkLze7n1Pin54omcNTbtQq0qhbNt-Gdi6M9mecygD-te4E2VoBEW77zOYZmsHyOS5k61XPfYQ6TFdYEsqZ2Mdxb6lE75zrPp-pCR6Ly205BvixK2COxap7hUkNSKNBNdkBhvfi0TahhFAJDPKgr8dibFxCt0chZzuxiPhBfbCp2pUyOh9Dv-Nb6DMFZqndMVmqYM1Y89l9F3egDToAYYhOWhxOjCWk7DQ5k0ZvS_Wpme")' }}
-                                ></div>
-                                <div className="p-8 flex flex-col flex-1">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-primary bg-primary/10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-primary/20">{isRtl ? 'الحياة الجامعية' : 'Campus Life'}</span>
-                                        <span className="text-slate-500 dark:text-slate-400 font-medium text-sm" dir="ltr">Oct 18, 2024</span>
-                                    </div>
-                                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-primary transition-colors leading-[1.3] break-words">
-                                        {isRtl ? 'الاستعداد لحفل التخرج الشتوي 2024' : 'Preparation for Winter Convocation 2024'}
-                                    </h3>
-                                    <p className="text-slate-600 dark:text-slate-400 text-base font-medium leading-relaxed mb-6 line-clamp-3 flex-1">
-                                        {isRtl
-                                            ? 'تم الإعلان عن المواعيد النهائية والتفاصيل اللوجستية لحفل التخرج القادم. ومن المتوقع أن يتسلم أكثر من 2000 طالب درجاتهم...'
-                                            : 'Final dates and logistics have been announced for the upcoming graduation ceremony. Over 2,000 students are expected to receive their degrees...'}
-                                    </p>
-                                    <span className="bg-slate-50 dark:bg-slate-900 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-sm flex items-center gap-2 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all w-fit">
-                                        {isRtl ? 'قراءة المزيد' : 'Read More'} <span className={`material-symbols-outlined text-base ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>arrow_forward</span>
-                                    </span>
-                                </div>
-                            </article>
-
-                            {/* News Card 3 */}
-                            <article className="bg-white dark:bg-slate-950 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:border-primary/30 transition-all group cursor-pointer flex flex-col hover:-translate-y-1">
-                                <div
-                                    className="aspect-video bg-cover bg-center overflow-hidden transition-transform duration-700 group-hover:scale-105"
-                                    alt="Business students having a workshop meeting"
-                                    style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuB5fyJza6yLVLbBUG4BXeCpPM-D0aHjywpwAMSzh5eyQ12lMJLR23RlsJLe3Ir7l9e7d09JnhcxR976w_XveVBGm1FPDo50LNaTadiGSHeBoOefp_qimfuvYoqLGpssnL6fXFPbIWQeuwyzXYOQmX6dVlpTY4MxRTSClO6-PYjMAJ2e6PG1nsYtGHhaykJ-3iNLGpiSIvsuPTKh_2r4WWkpeSHyL1WSqViEGmJoWRmtESGhLMJaqo695qi8M4z8XXvUuaUzEP9XqoHX")' }}
-                                ></div>
-                                <div className="p-8 flex flex-col flex-1">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-primary bg-primary/10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-primary/20">{isRtl ? 'أكاديميات' : 'Academics'}</span>
-                                        <span className="text-slate-500 dark:text-slate-400 font-medium text-sm" dir="ltr">Oct 15, 2024</span>
-                                    </div>
-                                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-primary transition-colors leading-[1.3] break-words">
-                                        {isRtl ? 'تخصص ماجستير إدارة أعمال جديد في الحوكمة الرقمية' : 'New MBA Concentration in Digital Governance'}
-                                    </h3>
-                                    <p className="text-slate-600 dark:text-slate-400 text-base font-medium leading-relaxed mb-6 line-clamp-3 flex-1">
-                                        {isRtl
-                                            ? 'بدءًا من الفصل الدراسي القادم، ستقدم كلية إدارة الأعمال مسارًا متخصصًا يركز على سياسة وإدارة التحول الرقمي...'
-                                            : 'Starting next semester, the Business School will offer a specialized track focusing on the policy and management of digital transformation...'}
-                                    </p>
-                                    <span className="bg-slate-50 dark:bg-slate-900 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-sm flex items-center gap-2 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all w-fit">
-                                        {isRtl ? 'قراءة المزيد' : 'Read More'} <span className={`material-symbols-outlined text-base ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>arrow_forward</span>
-                                    </span>
-                                </div>
-                            </article>
-
-                            {/* News Card 4 */}
-                            <article className="bg-white dark:bg-slate-950 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:border-primary/30 transition-all group cursor-pointer flex flex-col hover:-translate-y-1">
-                                <div
-                                    className="aspect-video bg-cover bg-center overflow-hidden transition-transform duration-700 group-hover:scale-105"
-                                    alt="People collaborating at a startup office space"
-                                    style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBr4oGgby_E1cdHya0NbwPNidKecLQTLDV3ChPbaTRFEQ1eiwRBAOoJiGfG24LM1U3U6LVMdwOFSYUMgS31-APkD2UEpnei0MLvqIMFJx666T9Wv0ribAaCsy3Xq2ma5UQpSsUBMDktEbCkoUdHRk9uj19z-6jYZ7VLF8e60CLUCb7-QfsvBoCesAuHJVURYm9664oKEFfteYRo-EtBQTfup6X99_bSG_GCAefan0DmzV_x9hrstote8mB0XhN-qdZo2nNTn5nMAgaa")' }}
-                                ></div>
-                                <div className="p-8 flex flex-col flex-1">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-primary bg-primary/10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-primary/20">{isRtl ? 'الفعاليات' : 'Events'}</span>
-                                        <span className="text-slate-500 dark:text-slate-400 font-medium text-sm" dir="ltr">Oct 12, 2024</span>
-                                    </div>
-                                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-primary transition-colors leading-[1.3] break-words">
-                                        {isRtl ? 'أبرز أحداث المعرض التقني السنوي 2024' : 'Annual Tech Expo 2024 Highlights'}
-                                    </h3>
-                                    <p className="text-slate-600 dark:text-slate-400 text-base font-medium leading-relaxed mb-6 line-clamp-3 flex-1">
-                                        {isRtl
-                                            ? 'استرجع أفضل اللحظات من معرض التكنولوجيا لهذا العام والذي يقوده الطلاب ويعرض أكثر من 100 مشروع نموذج أولي لقادة الصناعة...'
-                                            : 'Relive the best moments from this year\'s student-led technology exhibition showcasing over 100 prototype projects to industry leaders...'}
-                                    </p>
-                                    <span className="bg-slate-50 dark:bg-slate-900 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-sm flex items-center gap-2 group-hover:bg-primary group-hover:text-slate-900 group-hover:border-primary transition-all w-fit">
-                                        {isRtl ? 'قراءة المزيد' : 'Read More'} <span className={`material-symbols-outlined text-base ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`}>arrow_forward</span>
-                                    </span>
-                                </div>
-                            </article>
+                                </article>
+                            ))}
                         </div>
 
                         <div className="mt-12 flex justify-center">

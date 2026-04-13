@@ -1,12 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeContext';
-import fcai from '../../assets/fcai.png';
-import medicine from '../../assets/medicine.png';
+import { useGlobalData } from '../../context/GlobalDataContext';
+import fcai from '../../assets/fcai.webp';
+import medicine from '../../assets/medicine.webp';
 import tourest from '../../assets/tourest.png';
 
 export default function Home() {
     const { isRtl } = useThemeContext();
+    const { homeContent, news } = useGlobalData();
+
+    // Use latest 4 news items
+    const latestNews = news ? [...news].reverse().slice(0, 4) : [];
 
     return (
         <>
@@ -31,19 +36,11 @@ export default function Home() {
                         </div>
 
                         <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] tracking-tight break-words">
-                            {isRtl ? 'جامعة السادات' : 'SADAT'} <br className="hidden sm:block" />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-300">
-                                {isRtl ? 'الذكية' : 'SMART '}
-                            </span>
-                            <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-2 text-slate-300 font-extrabold tracking-tight">
-                                {isRtl ? 'منصة تعليمية' : 'UNIVERSITY.'}
-                            </span>
+                            {isRtl ? homeContent?.heroTitleAr : homeContent?.heroTitleEn}
                         </h2>
 
                         <p className="mt-6 md:mt-8 text-lg md:text-xl text-slate-300 font-medium max-w-2xl leading-relaxed">
-                            {isRtl
-                                ? 'تمكين الجيل القادم من قادة العالم من خلال التعليم الذكي المبتكر، والبحوث المتطورة، والتميز الأكاديمي.'
-                                : 'Empowering the next generation of global leaders through innovative smart education, cutting-edge research, and academic excellence.'}
+                            {isRtl ? homeContent?.heroSubtitleAr : homeContent?.heroSubtitleEn}
                         </p>
 
                         <div className="mt-10 md:mt-12 flex flex-col sm:flex-row gap-4 md:gap-5 w-full">
@@ -138,7 +135,7 @@ export default function Home() {
                         <Link to="/college/computer-science" className="group flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-slate-950 shadow-sm border border-slate-100 dark:border-slate-800 transition-all hover:shadow-2xl hover:shadow-primary/5">
                             <div className="h-64 w-full overflow-hidden relative flex items-center justify-center bg-slate-50 dark:bg-slate-900/50">
                                 <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors z-10"></div>
-                                <img className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={fcai} alt="CS & AI" />
+                                <img loading="lazy" className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={fcai} alt="CS & AI" />
                             </div>
                             <div className="p-8 flex-1 flex flex-col">
                                 <h5 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{isRtl ? 'الحاسبات والذكاء الاصطناعي' : 'Computer Science & AI'}</h5>
@@ -153,7 +150,7 @@ export default function Home() {
                         <Link to="/college/pharmacy" className="group flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-slate-950 shadow-sm border border-slate-100 dark:border-slate-800 transition-all hover:shadow-2xl hover:shadow-primary/5">
                             <div className="h-64 w-full overflow-hidden relative flex items-center justify-center bg-slate-50 dark:bg-slate-900/50">
                                 <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors z-10"></div>
-                                <img className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={medicine} alt="Pharmacy" />
+                                <img loading="lazy" className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={medicine} alt="Pharmacy" />
                             </div>
                             <div className="p-8 flex-1 flex flex-col">
                                 <h5 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{isRtl ? 'الصيدلة' : ' Pharmacy'}</h5>
@@ -168,7 +165,7 @@ export default function Home() {
                         <Link to="/college/tourism" className="group flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-slate-950 shadow-sm border border-slate-100 dark:border-slate-800 transition-all hover:shadow-2xl hover:shadow-primary/5">
                             <div className="h-64 w-full overflow-hidden relative flex items-center justify-center bg-slate-50 dark:bg-slate-900/50">
                                 <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors z-10"></div>
-                                <img className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={tourest} alt="Tourism" />
+                                <img loading="lazy" className="h-full w-full p-8 object-contain transition-transform duration-700 ease-out group-hover:scale-110" src={tourest} alt="Tourism" />
                             </div>
                             <div className="p-8 flex-1 flex flex-col">
                                 <h5 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{isRtl ? 'السياحة والفنادق' : 'Tourism & Hotels'}</h5>
@@ -200,65 +197,22 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {/* News Items */}
-                        <Link to="/news" className="group flex flex-col gap-5">
-                            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
-                                <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkBMWtn_CWksE1-BpqZZDSx0N8iEkuBMDt4V4WQJFk7GuJ-cwuoLYbYNxeV-U7_lyOx2XwUEUzjCF1GJ8RoI0ad95tEPB3lO82e3o_zfhT0NrP1rGRSb0YTAvxy5DEUahD15NDnEB-lFGVOsAjcqnsD2e6w52bMUB8MRpZNUYN2fJbyjug4cavRJRNO2snNuESwsGfIZaHMbSyUbZVHZ2-XMKgwha5s8bErfpYoSgYuL9LTmIVo0d5EEwvtnO--GTUy7tobvZ3N37l" alt="News 1" />
-                            </div>
-                            <div>
-                                <div className="flex items-center gap-3 mb-3">
-                                    <span className="rounded-md bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary uppercase tracking-widest">{isRtl ? 'أكاديمي' : 'Academic'}</span>
-                                    <span className="text-[11px] font-semibold text-slate-400">Oct 12, 2024</span>
+                        {latestNews.map((n) => (
+                            <Link to="/news" key={n.id} className="group flex flex-col gap-5">
+                                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                                    <img loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src={n.image || "https://images.unsplash.com/photo-1541888081688-ea121a55b0a7?q=80&w=2070"} alt={n.titleEn} />
                                 </div>
-                                <h6 className="text-lg font-bold text-slate-900 dark:text-white leading-snug group-hover:text-primary transition-colors">
-                                    {isRtl ? 'جامعة السادات تصنف ضمن أفضل 10 جامعات للتعليم الذكي' : 'SSU Ranks Top 10 in Regional Smart Education Index'}
-                                </h6>
-                            </div>
-                        </Link>
-
-                        <Link to="/news" className="group flex flex-col gap-5">
-                            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
-                                <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWmAOzJPyi9MpSBsikzKMUqdEvI9E1b7hJ70Ev3KQsbP0x15dLWt9_ThT-iW2vo4QdI6auhEHGFkm41ygXcPw6_limWQwsOW21GfemZq09eiog2SXVwXq9pxT9CeCFiq20XjA5YxAdk5hgaAKOcjbEhvBKUZEOV7x5U9ca2FVHPmvKobqrWCOmoqyGYP_WN3kE1o2lb3IFkOB080OXWPLGX80xB97o-u7k_2nwxUyFyG9-5Ir24RtL7ImQpuesenB7YigrvDFOOqMN" alt="News 2" />
-                            </div>
-                            <div>
-                                <div className="flex items-center gap-3 mb-3">
-                                    <span className="rounded-md bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary uppercase tracking-widest">{isRtl ? 'بحث' : 'Research'}</span>
-                                    <span className="text-[11px] font-semibold text-slate-400">Oct 10, 2024</span>
+                                <div>
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="rounded-md bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary uppercase tracking-widest">{isRtl ? 'أخبار' : 'News'}</span>
+                                        <span className="text-[11px] font-semibold text-slate-400">{n.date}</span>
+                                    </div>
+                                    <h6 className="text-lg font-bold text-slate-900 dark:text-white leading-snug group-hover:text-primary transition-colors">
+                                        {isRtl ? n.titleAr : n.titleEn}
+                                    </h6>
                                 </div>
-                                <h6 className="text-lg font-bold text-slate-900 dark:text-white leading-snug group-hover:text-primary transition-colors">
-                                    {isRtl ? 'شراكة جديدة لمركز أبحاث الذكاء الاصطناعي مع قيادات التقنية' : 'New AI Research Center Partnership with Tech Giants'}
-                                </h6>
-                            </div>
-                        </Link>
-
-                        <Link to="/news" className="group flex flex-col gap-5">
-                            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
-                                <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEXw6kqlzRdTXjVtT0hQl-_uHj2wIJ2XIiHeQMzDgbcZPdvk9N_wK63bQmNOp6WHcvRBgpT3tJGjdHqVYOMc3mAey1zYQXlGXzs_G88JjAjIy7cjciMFdyaEtec2nvSiAHVSZ5nE1OA7Nm74RTSAyTQGkwyjTrSPMkKo7EpWXzPhkdEMwH_AbsVyxedJ6Ly5VKjMh0U8tEmyB8gRwSuVUnQl3rO2xPF6XzwssIMRHQ1mtih8b3T-FuqKfB8tjouJAkvY7Sdfb0kbfh" alt="News 3" />
-                            </div>
-                            <div>
-                                <div className="flex items-center gap-3 mb-3">
-                                    <span className="rounded-md bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary uppercase tracking-widest">{isRtl ? 'حياة الطالب' : 'Student Life'}</span>
-                                    <span className="text-[11px] font-semibold text-slate-400">Oct 08, 2024</span>
-                                </div>
-                                <h6 className="text-lg font-bold text-slate-900 dark:text-white leading-snug group-hover:text-primary transition-colors">
-                                    {isRtl ? 'فتح باب التسجيل لمعرض الابتكار التكنولوجي السنوي للطلاب' : 'Annual Tech-Innovation Expo Registrations Open'}
-                                </h6>
-                            </div>
-                        </Link>
-
-                        <Link to="/news" className="group flex flex-col gap-5">
-                            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
-                                <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8rb_faApqp-wGgF4sYCYv6yP21ZH3fND1lEmmEkbQpM9pbBsVmNaP4t1Zf28tLbgOs8jWoQEOcLUlkj4sfyyeYatVLyJR33kM3R8z7jI_X_H9ddlnZ7tkSVsHOhPCASTCgRfevuW7q0Vt23Re2wkbD8B7wQkleSY0FL9kkIy8Hb-hqoMejgtMZjjUjkEj4lCLSPgzFGasa4wcU6Ur7nxLFIOpJUyrSkYhgyVJWw0AOVH64jXlGOgAFw2IxnWuRNdA-6GtLDqeVLVT" alt="News 4" />
-                            </div>
-                            <div>
-                                <div className="flex items-center gap-3 mb-3">
-                                    <span className="rounded-md bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary uppercase tracking-widest">{isRtl ? 'أحداث' : 'Events'}</span>
-                                    <span className="text-[11px] font-semibold text-slate-400">Oct 05, 2024</span>
-                                </div>
-                                <h6 className="text-lg font-bold text-slate-900 dark:text-white leading-snug group-hover:text-primary transition-colors">
-                                    {isRtl ? 'المؤتمر الدولي للمدن الذكية المستدامة 2024' : 'International Conference on Smart Cities 2024'}
-                                </h6>
-                            </div>
-                        </Link>
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </section>

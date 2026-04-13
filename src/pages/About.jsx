@@ -1,8 +1,10 @@
 import React from 'react';
 import { useThemeContext } from '../context/ThemeContext';
-import naser from '../assets/naser.png';
+import { useGlobalData } from '../context/GlobalDataContext';
+
 export default function About() {
     const { isRtl } = useThemeContext();
+    const { president } = useGlobalData();
 
     return (
         <div className="flex flex-col w-full min-h-screen text-slate-900 dark:text-slate-100">
@@ -38,14 +40,10 @@ export default function About() {
                             </h2>
                             <div className="space-y-6 text-slate-600 dark:text-slate-400 font-medium leading-relaxed text-lg">
                                 <p>
-                                    {isRtl
-                                        ? 'مرحبًا بكم في جامعة السادات الذكية. وبينما نتطلع إلى المستقبل، يظل التزامنا ثابتًا: تعزيز بيئة يلتقي فيها الابتكار بالتقاليد. إن حرمنا الجامعي هو أكثر من مجرد مكان للتعلم؛ إنه بوتقة لقادة الغد.'
-                                        : 'Welcome to Sadat Smart University. As we look towards the future, our commitment remains steadfast: to foster an environment where innovation meets tradition. Our campus is more than just a place of learning; it is a crucible for the leaders of tomorrow.'}
+                                    {isRtl ? president?.messageAr?.split('\n')[0] : president?.messageEn?.split('\n')[0] || "Welcome to Sadat Smart University. As we look towards the future, our commitment remains steadfast: to foster an environment where innovation meets tradition."}
                                 </p>
                                 <p>
-                                    {isRtl
-                                        ? 'نحن نؤمن بقوة "التعليم الذكي" - الاستفادة من التكنولوجيا لتعزيز الإمكانات البشرية بدلاً من استبدالها. انضم إلينا ونحن نواصل دفع حدود ما هو ممكن في الأوساط الأكاديمية والبحثية.'
-                                        : 'We believe in the power of "Smart Education"—leveraging technology to enhance human potential rather than replace it. Join us as we continue to push the boundaries of what is possible in academia and research.'}
+                                    {isRtl ? president?.messageAr?.split('\n')[1] || "" : president?.messageEn?.split('\n')[1] || "We believe in the power of 'Smart Education'—leveraging technology to enhance human potential rather than replace it."}
                                 </p>
                                 <div className={`pt-6 pb-2 ${isRtl ? 'border-r-4 pr-6' : 'border-l-4 pl-6'} border-primary`}>
                                     <p className="italic text-slate-900 dark:text-white font-bold text-xl leading-snug">
@@ -56,14 +54,18 @@ export default function About() {
                                 </div>
                                 <div className="pt-8 flex items-center gap-4">
                                     <div className="h-12 w-12 rounded-full bg-slate-200 dark:bg-slate-800 border-2 border-primary flex items-center justify-center overflow-hidden">
-                                        <span className="material-symbols-outlined text-slate-400">person</span>
+                                        {president?.image ? (
+                                            <img src={president.image} alt="President Avatar" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <span className="material-symbols-outlined text-slate-400">person</span>
+                                        )}
                                     </div>
                                     <div>
                                         <p className="font-bold text-slate-900 dark:text-white">
-                                            {isRtl ? 'أ.د. أحمد السادات' : 'Dr. Ahmed El-Sadat'}
+                                            {isRtl ? president?.nameAr : president?.nameEn}
                                         </p>
                                         <p className="text-sm text-primary font-bold uppercase tracking-wider mt-1">
-                                            {isRtl ? 'رئيس الجامعة' : 'President & Vice-Chancellor'}
+                                            {isRtl ? president?.titleAr : president?.titleEn}
                                         </p>
                                     </div>
                                 </div>
@@ -74,8 +76,9 @@ export default function About() {
                                 <div className="absolute top-6 left-6 w-full h-full border-2 border-primary/20 rounded-3xl -z-10 bg-slate-50 dark:bg-slate-900"></div>
                                 <img
                                     className="rounded-3xl shadow-2xl w-full h-[600px] object-cover"
-                                    alt={isRtl ? "صورة لرئيس الجامعة بأزياء رسمية" : "Portrait of the University President in formal attire"}
-                                    src={naser}
+                                    loading="lazy"
+                                    alt={isRtl ? "صورة لرئيس الجامعة" : "Portrait of the University President"}
+                                    src={president?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200"}
                                 />
                             </div>
                         </div>

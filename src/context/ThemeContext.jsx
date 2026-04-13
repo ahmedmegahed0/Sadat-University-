@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-    // eslint-disable-next-line react-refresh/only-export-components
+     
     const [themeMode, setThemeMode] = useState('gold'); // 'gold' | 'blue'
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isRtl, setIsRtl] = useState(false);

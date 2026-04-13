@@ -1,13 +1,22 @@
 import React from 'react';
 import { useThemeContext } from '../context/ThemeContext';
+import { useFacultyContext } from '../context/FacultyContext';
+import FacultyCard from '../components/faculty/FacultyCard';
 
 export default function Pharmacy() {
     const { isRtl } = useThemeContext();
+    const { facultyList } = useFacultyContext();
+    
+    const filteredFaculty = facultyList.filter(f => f.colleges && f.colleges.includes('pharmacy'))
+        .sort((a, b) => {
+            if (a.role === 'doctor' && b.role !== 'doctor') return -1;
+            if (a.role !== 'doctor' && b.role === 'doctor') return 1;
+            return 0;
+        })
+        .slice(0, 4);
 
     return (
         <>
-            {/* Hero Section */}
-            {/* Hero Section */}
             <section className="relative bg-white dark:bg-slate-900 overflow-hidden transition-colors py-20 lg:py-32">
                 <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
                     <div className="space-y-8">
@@ -176,6 +185,34 @@ export default function Pharmacy() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* Faculty Staff Section Preview */}
+            <section className="py-24 bg-slate-50 dark:bg-slate-950 transition-colors">
+                <div className="mx-auto max-w-7xl px-6">
+                    <div className="mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div>
+                            <h2 className="text-4xl font-black text-slate-900 dark:text-white capitalize">{isRtl ? 'هيئة التدريس' : 'Faculty Staff'}</h2>
+                            <div className="mt-4 h-1.5 w-24 rounded-full bg-primary"></div>
+                        </div>
+                        <a href={`/college/pharmacy/faculty`} className="flex items-center gap-2 group bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-primary dark:hover:text-primary px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary shadow-sm font-bold transition-all">
+                            {isRtl ? 'عرض الكل' : 'View All'}
+                            <span className={`material-symbols-outlined transition-transform ${isRtl ? 'group-hover:-translate-x-1 rotate-180' : 'group-hover:translate-x-1'}`}>arrow_forward</span>
+                        </a>
+                    </div>
+                    
+                    {filteredFaculty.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {filteredFaculty.map(member => (
+                                <FacultyCard key={member.id} member={member} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-12 text-slate-500">
+                            {isRtl ? 'لم يتم إضافة أعضاء هيئة تدريس بعد.' : 'No faculty members added yet.'}
+                        </div>
+                    )}
                 </div>
             </section>
         </>

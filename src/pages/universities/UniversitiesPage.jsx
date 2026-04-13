@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeContext';
-import { getUniversitiesByCategory } from '../../services/mockData';
+import { useGlobalData } from '../../context/GlobalDataContext';
 
 export default function UniversitiesPage() {
     const { category } = useParams();
     const { isRtl } = useThemeContext();
-    const navigate = useNavigate();
+    const { universities: globalUniversities } = useGlobalData();
+
     const [universities, setUniversities] = useState([]);
 
     useEffect(() => {
-        const data = getUniversitiesByCategory(category);
+        const data = (globalUniversities || []).filter(u => u.category === category);
         setUniversities(data);
-    }, [category]);
+    }, [category, globalUniversities]);
 
     const getCategoryTitle = () => {
         switch (category) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeContext';
-import registerBanner from '../../assets/register-banner.png';
+import registerBanner from '../../assets/register-banner.webp';
 
 export default function Register() {
     const { isRtl } = useThemeContext();

@@ -1,9 +1,11 @@
 import React from 'react';
 import { useThemeContext } from '../context/ThemeContext';
+import { useGlobalData } from '../context/GlobalDataContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function Admissions() {
     const { isRtl } = useThemeContext();
+    const { settings } = useGlobalData();
     const navigate = useNavigate();
 
     return (
@@ -236,13 +238,13 @@ export default function Admissions() {
                                     <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
                                         <span className="material-symbols-outlined text-sm">call</span>
                                     </div>
-                                    +1-800-SSU-JOIN
+                                    {settings?.contactPhone || '+20 2 123 4567'}
                                 </span>
                                 <span className="flex items-center gap-3 hover:text-white transition-colors cursor-pointer" dir="ltr">
                                     <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
                                         <span className="material-symbols-outlined text-sm">mail</span>
                                     </div>
-                                    admissions@ssu.edu
+                                    {settings?.contactEmail || 'admissions@ssu.edu'}
                                 </span>
                             </div>
                         </div>

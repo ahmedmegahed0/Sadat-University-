@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeContext';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.webp';
 
 export default function TopHeader({
     universityName = 'SADAT University',
     universityNameAr = 'جامعة السادات الذكية',
-    logoImage = "logo.png"
+    logoImage = "logo.webp"
 }) {
     const { isRtl, isDarkMode } = useThemeContext();
 
@@ -14,7 +15,7 @@ export default function TopHeader({
             <div className={`mx-auto max-w-7xl flex items-center justify-between`}>
 
                 {/* Logo and University Name (Start side: Left in LTR, Right in RTL) */}
-                <div className="flex items-center gap-3 sm:gap-4">
+                <Link to="/" className="flex items-center gap-3 sm:gap-4 hover:opacity-90 transition-opacity">
                     {logoImage ? (
                         <img
                             src={logo}
@@ -34,7 +35,7 @@ export default function TopHeader({
                             {isRtl ? 'منصة الجامعة' : 'University Platform'}
                         </p>
                     </div>
-                </div>
+                </Link>
 
                 {/* Optional info (End side: Right in LTR, Left in RTL) */}
                 <div className="hidden sm:flex items-center gap-6 text-sm font-semibold text-slate-600 dark:text-slate-300">

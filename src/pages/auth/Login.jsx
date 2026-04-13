@@ -1,21 +1,67 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeContext';
-import loginBanner from '../../assets/login-banner.png';
+import { useAuth } from '../../context/AuthContext';
+import loginBanner from '../../assets/login-banner.webp';
 
 export default function Login() {
     const { isRtl } = useThemeContext();
     const navigate = useNavigate();
+    const { isAuthenticated, isStudent, isSuperAdmin, isAdmin, isDoctor, loginStudent, loginAdmin, loginDoctor, logout } = useAuth();
     const [role, setRole] = useState('student');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    // If already logged in, redirect to appropriate dashboard
+    if (isAuthenticated) {
+        if (isStudent) return <Navigate to="/student/dashboard" replace />;
+        if (isSuperAdmin) return <Navigate to="/dashboard/super-admin" replace />;
+        if (isAdmin) return <Navigate to="/dashboard/college-admin" replace />;
+        if (isDoctor) return <Navigate to="/doctor/dashboard" replace />;
+    }
 
     const handleLogin = (e) => {
         e.preventDefault();
+        setError('');
         if (role === 'super') {
-            navigate('/dashboard/super-admin');
+            const adminLoginResult = loginAdmin(email, password);
+            if(adminLoginResult.success) {
+                if (adminLoginResult.user.role === 'SUPER_ADMIN') {
+                    navigate('/dashboard/super-admin');
+                } else {
+                    logout();
+                    setError(isRtl ? 'الرجاء استخدام خيار تسجيل دخول مسؤول الكلية.' : 'Please use the Admin login option.');
+                }
+            } else {
+                setError(adminLoginResult.message);
+            }
         } else if (role === 'admin') {
-            navigate('/dashboard/college-admin');
+            const adminLoginResult = loginAdmin(email, password);
+            if(adminLoginResult.success) {
+                if(adminLoginResult.user.role === 'admin') {
+                    navigate('/dashboard/college-admin');
+                } else {
+                    logout();
+                    setError(isRtl ? 'الرجاء استخدام خيار تسجيل دخول مسؤول النظام.' : 'Please use the Super Admin login option.');
+                }
+            } else {
+                setError(adminLoginResult.message);
+            }
+        } else if (role === 'doctor') {
+            const result = loginDoctor(email, password);
+            if (result.success) {
+                navigate('/doctor/dashboard');
+            } else {
+                setError(result.message);
+            }
         } else {
-            navigate('/'); // Or student dashboard if there is one
+            const result = loginStudent(email, password);
+            if (result.success) {
+                navigate('/student/dashboard');
+            } else {
+                setError(result.message);
+            }
         }
     };
 
@@ -60,7 +106,7 @@ export default function Login() {
                         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">
                             {isRtl ? 'تسجيل الدخول كـ:' : 'Login as:'}
                         </label>
-                        <div className="grid grid-cols-3 gap-2 p-1.5 bg-slate-100 dark:bg-gray-800 rounded-xl">
+                        <div className="grid grid-cols-4 gap-2 p-1.5 bg-slate-100 dark:bg-gray-800 rounded-xl">
                             <label className="cursor-pointer">
                                 <input
                                     type="radio" name="role" value="student" className="peer hidden"
@@ -88,6 +134,15 @@ export default function Login() {
                                     {isRtl ? 'مسؤول النظام' : 'Super Admin'}
                                 </div>
                             </label>
+                            <label className="cursor-pointer">
+                                <input
+                                    type="radio" name="role" value="doctor" className="peer hidden"
+                                    checked={role === 'doctor'} onChange={() => setRole('doctor')}
+                                />
+                                <div className="py-2.5 text-center text-sm font-medium rounded-lg transition-all peer-checked:bg-white dark:peer-checked:bg-slate-700 peer-checked:text-primary peer-checked:shadow-sm text-slate-500 dark:text-slate-400">
+                                    {isRtl ? 'دكتور' : 'Doctor'}
+                                </div>
+                            </label>
                         </div>
                     </div>
 
@@ -103,6 +158,8 @@ export default function Login() {
                                 <input
                                     id="email" type="email" required
                                     placeholder="name@university.edu"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className={`w-full py-3 bg-slate-50 dark:bg-gray-800/50 border border-slate-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm ${isRtl ? 'pr-11 pl-4' : 'pl-11 pr-4'}`}
                                 />
                             </div>
@@ -124,6 +181,8 @@ export default function Login() {
                                 <input
                                     id="password" type="password" required
                                     placeholder="••••••••"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className={`w-full py-3 bg-slate-50 dark:bg-gray-800/50 border border-slate-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm px-11`}
                                 />
                                 <button type="button" className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 ${isRtl ? 'left-3' : 'right-3'}`}>
@@ -132,6 +191,11 @@ export default function Login() {
                             </div>
                         </div>
 
+                        {error && (
+                            <div className="text-red-500 text-sm font-medium text-center">
+                                {isRtl ? 'بيانات الاعتماد غير صالحة' : error}
+                            </div>
+                        )}
                         <div className="flex items-center gap-2">
                             <input type="checkbox" id="remember" className="w-4 h-4 text-primary bg-white border-slate-300 rounded focus:ring-primary focus:ring-offset-0" />
                             <label htmlFor="remember" className="text-sm text-slate-600 dark:text-slate-400">

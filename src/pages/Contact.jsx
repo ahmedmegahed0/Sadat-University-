@@ -1,8 +1,10 @@
 import React from 'react';
 import { useThemeContext } from '../context/ThemeContext';
+import { useGlobalData } from '../context/GlobalDataContext';
 
 export default function Contact() {
     const { isRtl } = useThemeContext();
+    const { settings } = useGlobalData();
 
     return (
         <div className="flex flex-col w-full min-h-screen text-slate-900 dark:text-slate-100">
@@ -99,7 +101,7 @@ export default function Contact() {
                                 <div>
                                     <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">{isRtl ? 'أرقام الهواتف' : 'Phone Numbers'}</h3>
                                     <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed" dir="ltr">
-                                        <span className="text-slate-900 dark:text-white">{isRtl ? 'القبول:' : 'Admissions:'}</span> +20 2 123 4567<br />
+                                        <span className="text-slate-900 dark:text-white">{isRtl ? 'القبول:' : 'Admissions:'}</span> {settings?.contactPhone || '+20 2 123 4567'}<br />
                                         <span className="text-slate-900 dark:text-white">{isRtl ? 'المكتب العام:' : 'General Office:'}</span> +20 2 987 6543
                                     </p>
                                 </div>
@@ -111,8 +113,8 @@ export default function Contact() {
                                 <div>
                                     <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">{isRtl ? 'البريد الإلكتروني' : 'Email Addresses'}</h3>
                                     <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
-                                        info@sadat-smart.edu.eg<br />
-                                        admissions@sadat-smart.edu.eg
+                                        {settings?.contactEmail || 'info@sadat-smart.edu.eg'}<br />
+                                        admissions@sadat.edu.eg
                                     </p>
                                 </div>
                             </div>

@@ -251,3 +251,97 @@ export const deleteUniversity = (id) => {
   const data = getUniversities().filter(u => u.id !== id);
   localStorage.setItem('stitch_universities_v2', JSON.stringify(data));
 };
+
+export const initialHomeContent = {
+    heroTitleEn: "Empowering the Future Through Smart Education",
+    heroTitleAr: "تمكين المستقبل من خلال التعليم الذكي",
+    heroSubtitleEn: "Join the largest university in Sadat City with over 20+ disciplines and world-class facilities.",
+    heroSubtitleAr: "انضم إلى أكبر جامعة في مدينة السادات بأكثر من 20 تخصصاً ومرافق عالمية المستوى.",
+    stats: [
+        { labelEn: "Students", labelAr: "طالب", value: "25k+" },
+        { labelEn: "Colleges", labelAr: "كلية", value: "14" },
+        { labelEn: "Alumni", labelAr: "خريج", value: "100k+" }
+    ]
+};
+
+export const initialNews = [
+    {
+        id: "1",
+        titleEn: "University wins top honors in AI research",
+        titleAr: "الجامعة تفوز بجوائز عليا في أبحاث الذكاء الاصطناعي",
+        date: "2026-04-05",
+        summaryEn: "Our faculty of Computer Science has secured the prestigious National AI Award for their breakthrough in machine learning optimization.",
+        summaryAr: "حصلت كلية الحاسبات على الجائزة الوطنية للذكاء الاصطناعي بفضل ابتكاراتها في تحسين التعلم الآلي.",
+        image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2070"
+    },
+    {
+        id: "2",
+        titleEn: "New Campus Expansion Project Kicks Off",
+        titleAr: "إطلاق مشروع توسعة الحرم الجامعي الجديد",
+        date: "2026-03-20",
+        summaryEn: "A multi-million dollar expansion to our medical campus has officially begun, adding 5 new research facilities.",
+        summaryAr: "بدأ رسمياً مشروع توسعة الحرم الطبي بملايين الدولارات بإضافة 5 مرافق بحثية جديدة.",
+        image: "https://images.unsplash.com/photo-1541888081688-ea121a55b0a7?q=80&w=2070"
+    }
+];
+
+export const initialPresident = {
+    nameEn: "Dr. Ahmed Megahed",
+    nameAr: "د. أحمد مجاهد",
+    titleEn: "University President",
+    titleAr: "رئيس الجامعة",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200",
+    messageEn: "Welcome to Sadat Smart University. Our vision is to pioneer a smart, sustainable, and innovative educational ecosystem.",
+    messageAr: "مرحباً بكم في جامعة السادات الذكية. رؤيتنا هي ريادة نظام بيئي تعليمي ذكي ومستدام ومبتكر."
+};
+
+export const initialMedia = [
+    { id: "m1", url: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070", usage: "General Campus", type: "image/jpeg" },
+    { id: "m2", url: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2086", usage: "Main Building", type: "image/jpeg" }
+];
+
+export const initialSettings = {
+    universityNameEn: "Sadat Smart University",
+    universityNameAr: "جامعة السادات الذكية",
+    contactEmail: "info@sadat.edu.eg",
+    contactPhone: "+20 48 260 0000",
+    logoLight: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Sadat_City_University_logo.jpg",
+    logoDark: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Sadat_City_University_logo.jpg"
+};
+
+export const initialAdmins = [
+    {
+        id: '1',
+        nameEn: 'Super Admin',
+        nameAr: 'المدير العام',
+        email: 'admin@university.com',
+        password: '123456',
+        role: 'Super Admin',
+        department: 'Administration',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070'
+    },
+    {
+        id: '2',
+        nameEn: 'College Dean',
+        nameAr: 'عميد الكلية',
+        email: 'dean@university.com',
+        password: '123456',
+        role: 'College Admin',
+        department: 'Computer Science',
+        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2076'
+    }
+];
+
+export const getGlobalInitialData = () => {
+    return {
+        rankings: initialRankings,
+        universities: initialUniversities,
+        homeContent: initialHomeContent,
+        news: initialNews,
+        president: initialPresident,
+        media: initialMedia,
+        settings: initialSettings,
+        admins: initialAdmins
+    };
+};
+

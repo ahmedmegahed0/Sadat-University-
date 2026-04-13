@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RankingPageLayout from '../../layouts/RankingPageLayout';
 import RankingContent from '../../components/rankings/RankingContent';
-import { getRankingBySlug } from '../../services/mockData';
+import { useGlobalData } from '../../context/GlobalDataContext';
 
 export default function RankingPage() {
     const { slug } = useParams();
+    const { rankings } = useGlobalData();
     const [ranking, setRanking] = useState(null);
 
     useEffect(() => {
-        const data = getRankingBySlug(slug);
+        const data = (rankings || []).find(r => r.slug === slug);
         setRanking(data);
-    }, [slug]);
+    }, [slug, rankings]);
 
     if (!ranking) {
         return (
