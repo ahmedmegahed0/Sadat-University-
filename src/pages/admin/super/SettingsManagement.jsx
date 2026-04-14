@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useGlobalData } from '../../../context/GlobalDataContext';
 import { useThemeContext } from '../../../context/ThemeContext';
+import FileUploader from '../../../components/common/FileUploader';
 
 export default function SettingsManagement() {
     const { settings, updateSettings } = useGlobalData();
@@ -100,22 +101,24 @@ export default function SettingsManagement() {
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-bold text-slate-500 mb-2">{isRtl ? 'رابط الشعار (الوضع الفاتح)' : 'Logo URL (Light Mode)'}</label>
-                            <input name="logoLight" value={formData.logoLight} onChange={handleChange} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-3 outline-none focus:border-primary dark:text-white" />
-                            {formData.logoLight && (
-                                <div className="mt-4 p-4 bg-slate-100 rounded-xl inline-block">
-                                    <img src={formData.logoLight} alt="Logo Light" className="h-12 w-auto" />
-                                </div>
-                            )}
+                            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-white/10">
+                                <FileUploader 
+                                    label={isRtl ? 'شعار النسخة الفاتحة (Light)' : 'Light Mode Logo'}
+                                    value={formData.logoLight}
+                                    onChange={val => setFormData({...formData, logoLight: val})}
+                                    type="image"
+                                />
+                            </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-bold text-slate-500 mb-2">{isRtl ? 'رابط الشعار (الوضع المظلم)' : 'Logo URL (Dark Mode)'}</label>
-                            <input name="logoDark" value={formData.logoDark} onChange={handleChange} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-3 outline-none focus:border-primary dark:text-white" />
-                            {formData.logoDark && (
-                                <div className="mt-4 p-4 bg-gray-900 rounded-xl inline-block">
-                                    <img src={formData.logoDark} alt="Logo Dark" className="h-12 w-auto" />
-                                </div>
-                            )}
+                            <div className="bg-slate-900 dark:bg-black p-4 rounded-xl border border-slate-700 dark:border-white/10">
+                                <FileUploader 
+                                    label={isRtl ? 'شعار النسخة الداكنة (Dark)' : 'Dark Mode Logo'}
+                                    value={formData.logoDark}
+                                    onChange={val => setFormData({...formData, logoDark: val})}
+                                    type="image"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

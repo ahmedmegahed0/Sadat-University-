@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useGlobalData } from '../../../context/GlobalDataContext';
 import { useThemeContext } from '../../../context/ThemeContext';
+import FileUploader from '../../../components/common/FileUploader';
 
 export default function NewsManagement() {
     const { news, addNews, updateNews, deleteNews } = useGlobalData();
@@ -95,20 +96,18 @@ export default function NewsManagement() {
                             </div>
                         </div>
                         <div className="md:col-span-2">
-                            <label className="block text-sm font-bold text-slate-500 mb-2">{isRtl ? 'رابط الصورة' : 'Image URL'}</label>
-                            <input name="image" value={formData.image} onChange={handleChange} className="w-full border rounded-xl p-3 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 dark:text-white outline-none focus:border-primary" />
+                            <FileUploader 
+                                label={isRtl ? 'صورة الخبر' : 'News Image'}
+                                value={formData.image}
+                                onChange={val => setFormData({...formData, image: val})}
+                                type="image"
+                            />
                         </div>
                         <div className="md:col-span-2">
                             <label className="block text-sm font-bold text-slate-500 mb-2">{isRtl ? 'التاريخ' : 'Date'}</label>
                             <input name="date" type="date" value={formData.date} onChange={handleChange} className="w-full max-w-xs border rounded-xl p-3 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 dark:text-white outline-none focus:border-primary" />
                         </div>
                     </div>
-                    
-                    {formData.image && (
-                         <div className="mt-4">
-                             <img src={formData.image} className="h-40 w-auto rounded-lg object-cover" alt="Preview" />
-                         </div>
-                    )}
 
                     <div className="mt-8 flex gap-4">
                         <button onClick={handleSave} className="bg-primary text-white px-6 py-2.5 rounded-lg font-bold hover:bg-primary/90 transition">

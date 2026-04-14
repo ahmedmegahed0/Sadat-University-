@@ -1,7 +1,6 @@
 import React from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
 import { useNavigate, Outlet, useLocation, NavLink } from 'react-router-dom';
-import { useAdminAuth } from '../../context/AdminAuthContext';
 import { useAuth } from '../../context/AuthContext';
 import { useCollegeContext } from '../../context/CollegeContext';
 
@@ -9,8 +8,7 @@ export default function CollegeAdminDashboard() {
     const { isRtl, toggleDark, isDarkMode } = useThemeContext();
     const navigate = useNavigate();
     const location = useLocation();
-    const { adminUser, currentCollegeId } = useAdminAuth();
-    const { logout } = useAuth();
+    const { user: adminUser, currentCollegeId, logout } = useAuth();
     const { colleges } = useCollegeContext();
 
     const college = colleges[currentCollegeId];

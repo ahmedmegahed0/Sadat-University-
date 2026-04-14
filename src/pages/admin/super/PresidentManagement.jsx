@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useGlobalData } from '../../../context/GlobalDataContext';
 import { useThemeContext } from '../../../context/ThemeContext';
+import FileUploader from '../../../components/common/FileUploader';
 
 export default function PresidentManagement() {
     const { president, updatePresident } = useGlobalData();
@@ -103,14 +104,13 @@ export default function PresidentManagement() {
                     <div className="lg:col-span-2 space-y-4">
                         <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-4">Media</h4>
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{isRtl ? 'رابط الصورة الشخصية' : 'Portrait Image URL'}</label>
-                            <input name="image" value={formData.image} onChange={handleChange} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-3 outline-none focus:border-primary dark:text-white" />
+                            <FileUploader 
+                                label={isRtl ? 'الصورة الشخصية' : 'Portrait Image'}
+                                value={formData.image}
+                                onChange={val => setFormData({...formData, image: val})}
+                                type="image"
+                            />
                         </div>
-                        {formData.image && (
-                            <div className="mt-4">
-                                <img src={formData.image} alt="Preview" className="w-32 h-32 object-cover rounded-full border-4 border-white dark:border-gray-800 shadow-lg" />
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeContext';
 import { useCollegeContext } from '../../context/CollegeContext';
 import { useAuth } from '../../context/AuthContext';
+import { useGlobalData } from '../../context/GlobalDataContext';
 import NavDropdown from './NavDropdown';
 
 export default function Navbar() {
@@ -51,13 +52,13 @@ export default function Navbar() {
         { path: '/contact', labelEn: 'Contact', labelAr: 'اتصل بنا' },
     ];
 
-    const rankingItems = [
-        { path: '/rankings/qs-arab', labelEn: 'QS Arab Region', labelAr: 'تصنيف كيو إس للمنطقة العربية' },
-        { path: '/rankings/webometrics', labelEn: 'Webometrics Ranking', labelAr: 'تصنيف ويبومتركس' },
-        { path: '/rankings/scimago', labelEn: 'SCImago Ranking', labelAr: 'تصنيف سيماجو' },
-        { path: '/rankings/shanghai', labelEn: 'Shanghai Ranking', labelAr: 'تصنيف شنغهاي' },
-        { path: '/rankings/the', labelEn: 'THE Ranking', labelAr: 'تصنيف التايمز' },
-    ];
+    // Dynamically fetch rankings from Global Data
+    const { rankings } = useGlobalData();
+    const rankingItems = rankings.map(ranking => ({
+        path: `/rankings/${ranking.slug}`,
+        labelEn: ranking.breadcrumb || ranking.title,
+        labelAr: ranking.title
+    }));
 
     const universityItems = [
         { path: '/universities/egyptian', labelEn: 'Egyptian Universities', labelAr: 'الجامعات المصرية' },
@@ -91,7 +92,7 @@ export default function Navbar() {
         }
         
         // Add Doctor Dashboard to all authenticated users for now so it's accessible
-        items.push({ path: '/dashboard/faculty', labelEn: 'Faculty Dashboard', labelAr: 'لوحة هيئة التدريس', icon: 'badge' });
+        items.push({ path: '/doctor/dashboard', labelEn: 'Faculty Dashboard', labelAr: 'لوحة هيئة التدريس', icon: 'badge' });
 
         return items;
     };

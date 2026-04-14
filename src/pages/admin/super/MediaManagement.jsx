@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useGlobalData } from '../../../context/GlobalDataContext';
 import { useThemeContext } from '../../../context/ThemeContext';
+import FileUploader from '../../../components/common/FileUploader';
 
 export default function MediaManagement() {
     const { media, addMedia, deleteMedia } = useGlobalData();
@@ -63,8 +64,12 @@ export default function MediaManagement() {
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="md:col-span-2">
-                             <label className="block text-sm font-bold text-slate-500 mb-2">{isRtl ? 'رابط الصورة' : 'Image URL'}</label>
-                             <input name="url" value={formData.url} onChange={handleChange} className="w-full border rounded-xl p-3 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 dark:text-white outline-none focus:border-primary" placeholder="https://" />
+                             <FileUploader 
+                                 label={isRtl ? 'صورة المعرض' : 'Gallery Image'}
+                                 value={formData.url}
+                                 onChange={val => setFormData({...formData, url: val})}
+                                 type="image"
+                             />
                         </div>
                         <div>
                             <label className="block text-sm font-bold text-slate-500 mb-2">{isRtl ? 'النص البديل (إنجليزي)' : 'Alt Text (EN)'}</label>
@@ -75,12 +80,6 @@ export default function MediaManagement() {
                             <input name="altAr" value={formData.altAr} onChange={handleChange} className="w-full border rounded-xl p-3 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 dark:text-white outline-none focus:border-primary" />
                         </div>
                     </div>
-                    
-                    {formData.url && (
-                        <div className="mt-4">
-                            <img src={formData.url} className="h-40 w-auto rounded-lg object-cover" alt="Preview" onError={(e) => e.target.style.display = 'none'} />
-                        </div>
-                    )}
 
                     <div className="mt-8 flex gap-4">
                         <button onClick={handleSave} className="bg-primary text-white px-6 py-2.5 rounded-lg font-bold hover:bg-primary/90 transition">

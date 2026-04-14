@@ -92,6 +92,8 @@ export const AuthProvider = ({ children }) => {
     // Derive avatar
     const avatar = user?.avatar || null;
 
+    const currentCollegeId = user?.collegeId || null;
+
     return (
         <AuthContext.Provider value={{
             user,
@@ -104,6 +106,7 @@ export const AuthProvider = ({ children }) => {
             isDoctor,
             displayName,
             avatar,
+            currentCollegeId,
             loginStudent,
             loginAdmin,
             loginDoctor,

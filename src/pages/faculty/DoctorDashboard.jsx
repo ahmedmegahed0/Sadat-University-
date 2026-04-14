@@ -4,6 +4,7 @@ import { useThemeContext } from '../../context/ThemeContext';
 import { useFacultyContext } from '../../context/FacultyContext';
 import { useCollegeContext } from '../../context/CollegeContext';
 import { useAuth } from '../../context/AuthContext';
+import FileUploader from '../../components/common/FileUploader';
 
 const LANGUAGE_OPTIONS = [
     'Arabic', 'English', 'French', 'German', 'Spanish',
@@ -211,28 +212,14 @@ export default function DoctorDashboard() {
                                     />
                                 </div>
 
-                                {/* Profile Image URL */}
+                                {/* Profile Image */}
                                 <div className="space-y-2 md:col-span-2">
-                                    <label className="text-sm font-bold text-slate-700 dark:text-slate-300">
-                                        {isRtl ? 'رابط صورة الملف الشخصي' : 'Profile Image URL'}
-                                    </label>
-                                    <div className="flex gap-3 items-center">
-                                        <input
-                                            type="url"
-                                            value={formData.image}
-                                            onChange={e => setFormData({ ...formData, image: e.target.value })}
-                                            placeholder="https://example.com/photo.jpg"
-                                            className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary outline-none transition-all"
-                                        />
-                                        {formData.image && (
-                                            <img
-                                                src={formData.image}
-                                                alt="preview"
-                                                className="w-10 h-10 rounded-lg object-cover border border-slate-200 dark:border-slate-700 shrink-0"
-                                                onError={e => { e.target.style.display = 'none'; }}
-                                            />
-                                        )}
-                                    </div>
+                                    <FileUploader 
+                                        label={isRtl ? 'صورة الملف الشخصي' : 'Profile Image'}
+                                        value={formData.image}
+                                        onChange={(val) => setFormData({ ...formData, image: val })}
+                                        type="image"
+                                    />
                                 </div>
 
                             </div>
@@ -248,21 +235,15 @@ export default function DoctorDashboard() {
                             </div>
                             <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                                {/* CV URL */}
+                                {/* CV Document */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-700 dark:text-slate-300">
-                                        {isRtl ? 'رابط السيرة الذاتية (CV)' : 'CV URL'}
-                                    </label>
-                                    <div className="relative">
-                                        <span className="material-symbols-outlined absolute top-1/2 -translate-y-1/2 left-3 text-slate-400 text-[18px]">description</span>
-                                        <input
-                                            type="url"
-                                            value={formData.cv}
-                                            onChange={e => setFormData({ ...formData, cv: e.target.value })}
-                                            placeholder="https://example.com/cv.pdf"
-                                            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary outline-none transition-all"
-                                        />
-                                    </div>
+                                    <FileUploader 
+                                        label={isRtl ? 'السيرة الذاتية (CV)' : 'CV Document'}
+                                        value={formData.cv}
+                                        onChange={(val) => setFormData({ ...formData, cv: val })}
+                                        type="document"
+                                        accept="application/pdf"
+                                    />
                                 </div>
 
                                 {/* Portfolio URL */}

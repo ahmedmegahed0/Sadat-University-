@@ -1,12 +1,12 @@
 import React from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
 import { useCollegeContext } from '../../context/CollegeContext';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function AdminOverview() {
     const { isRtl } = useThemeContext();
-    const { currentCollegeId } = useAdminAuth();
+    const { currentCollegeId } = useAuth();
     const { colleges } = useCollegeContext();
     const navigate = useNavigate();
     

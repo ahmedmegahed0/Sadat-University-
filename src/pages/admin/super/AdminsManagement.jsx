@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useGlobalData } from '../../../context/GlobalDataContext';
 import { useThemeContext } from '../../../context/ThemeContext';
 import { useCollegeContext } from '../../../context/CollegeContext';
+import FileUploader from '../../../components/common/FileUploader';
 
 export default function AdminsManagement() {
     const { admins, addAdmin, updateAdmin, deleteAdmin } = useGlobalData();
@@ -160,9 +161,13 @@ export default function AdminsManagement() {
                                 </div>
                             );
                         })()}
-                        <div>
-                            <label className="block text-sm font-bold text-slate-500 mb-2">{isRtl ? 'رابط الصورة الرمزية' : 'Avatar URL'}</label>
-                            <input name="avatar" value={formData.avatar} onChange={handleChange} className="w-full border rounded-xl p-3 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 dark:text-white outline-none focus:border-primary" placeholder="https://" />
+                        <div className="md:col-span-2">
+                            <FileUploader 
+                                label={isRtl ? 'الصورة الرمزية' : 'Avatar'}
+                                value={formData.avatar}
+                                onChange={val => setFormData({...formData, avatar: val})}
+                                type="image"
+                            />
                         </div>
                     </div>
 

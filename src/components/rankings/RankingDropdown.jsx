@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeContext';
+import { useGlobalData } from '../../context/GlobalDataContext';
 
 export default function RankingDropdown({ isMobile, onCloseMenu }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,13 +12,12 @@ export default function RankingDropdown({ isMobile, onCloseMenu }) {
     const titleEn = "International Rankings";
     const titleAr = "التصنيفات الدولية";
 
-    const rankings = [
-        { path: '/rankings/qs-arab', labelEn: 'QS Arab Region', labelAr: 'تصنيف كيو إس للمنطقة العربية' },
-        { path: '/rankings/webometrics', labelEn: 'Webometrics Ranking', labelAr: 'تصنيف ويبومتركس' },
-        { path: '/rankings/scimago', labelEn: 'SCImago Ranking', labelAr: 'تصنيف سيماجو' },
-        { path: '/rankings/shanghai', labelEn: 'Shanghai Ranking', labelAr: 'تصنيف شنغهاي' },
-        { path: '/rankings/the', labelEn: 'THE Ranking', labelAr: 'تصنيف التايمز' },
-    ];
+    const { rankings: globalRankings } = useGlobalData();
+    const rankings = globalRankings.map(ranking => ({
+        path: `/rankings/${ranking.slug}`,
+        labelEn: ranking.breadcrumb || ranking.title,
+        labelAr: ranking.title
+    }));
 
     const isActive = rankings.some(r => location.pathname === r.path);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+
 import { useAuth } from '../../context/AuthContext';
 
 export default function SuperAdminDashboard() {

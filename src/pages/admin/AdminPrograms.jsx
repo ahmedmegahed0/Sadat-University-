@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
 import { useCollegeContext } from '../../context/CollegeContext';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function AdminPrograms() {
     const { isRtl } = useThemeContext();
-    const { currentCollegeId } = useAdminAuth();
+    const { currentCollegeId } = useAuth();
     const { colleges, addProgram, deleteProgram } = useCollegeContext();
     
     const college = colleges[currentCollegeId];
