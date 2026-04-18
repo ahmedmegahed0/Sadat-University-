@@ -1,14 +1,18 @@
+import headFcaiImage from '../assets/head_fcai.jpeg';
+import headTourismImage from '../assets/head_TOURISM.jpeg';
+import headPharmacyImage from '../assets/head_MEDICINE.jpeg';
+
 export const INITIAL_COLLEGE_DATA = {
     'computer-science': {
         id: 'computer-science',
         name: 'Faculty of Computer Science & AI',
         nameAr: 'كلية الحاسبات والذكاء الاصطناعي',
         deanSection: {
-            name: 'Prof. Dr. Ibrahem Selim',
-            nameAr: 'أ.د. ابراهيم سليم',
+            name: 'Dean of FCAI',
+            nameAr: 'عميد كلية الحاسبات',
             message: 'Welcome to the Faculty of Computers & Artificial Intelligence at Sadat Smart University. Our mission is to cultivate leadership and innovation in the ever-evolving tech sector. We combine theoretical excellence with practical global perspectives to prepare our students for rewarding careers in the world\'s most dynamic industry.',
             messageAr: 'مرحباً بكم في كلية الحاسبات والذكاء الاصطناعي في جامعة السادات الذكية. مهمتنا هي تنمية القيادة والابتكار في قطاع التكنولوجيا المتطور باستمرار. نحن نجمع بين التميز النظري وجهات النظر العالمية العملية لإعداد طلابنا لشغل وظائف مجزية في الصناعة الأكثر ديناميكية في العالم.',
-            image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBqVQG4Ze0I0MM3eHUBsm4pQF0C9s4bVE6OA5IoMZKys08hEX2Lyvqdn4cvOF8sBBv73gLq3OWsTfu-TuvPOfsjVZxB6NuNASOyITbCs5N0Vn6ENV823RU5FKgVT17y_Zta7DxKHZpK8YjJzIhbdciNkkXc0P5kNvllHUTNQbNGx28GWhT6E5Rllbhn047c8cD0WOOJ1wQU9uwFkxbvKN8DVi0GTcpvABAYlgNnX0xBj9gnBQvCboUMu4VaZdro6cLwLtWLDIpR6q8x'
+            image: headFcaiImage
         },
         departments: [
             {
@@ -63,11 +67,11 @@ export const INITIAL_COLLEGE_DATA = {
         name: 'Faculty of Tourism & Hotels',
         nameAr: 'كلية السياحة والفنادق',
         deanSection: {
-            name: 'Prof. Dr. Neha Mahmoud',
-            nameAr: 'أ.د. نهى محمود',
+            name: 'Dean of Tourism',
+            nameAr: 'عميد كلية السياحة',
             message: 'Welcome to the Faculty of Tourism. We prepare our students for the global hospitality industry.',
             messageAr: 'مرحباً بكم في كلية السياحة. نحن نعد طلابنا لصناعة الضيافة العالمية.',
-            image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQe89QpQ4nZ-7v_9WQKxH3M9vVXVrC95t-qA_Lw6kHjQpX8_pQKq54mK-H_H9_7VqkCgK5W4lU1sWJm4VHQ6JQqK5wYnF4K7vGQ5HQpT9vQK8vH-H9_7VqK5wYnF4K7vGQ5HQpT9vQK8vH'
+            image: headTourismImage
         },
         departments: [
             {
@@ -87,11 +91,11 @@ export const INITIAL_COLLEGE_DATA = {
         name: 'Faculty of Pharmacy',
         nameAr: 'كلية الصيدلة',
         deanSection: {
-            name: 'Prof. Dr. Khaled Hassan',
-            nameAr: 'أ.د. خالد حسن',
+            name: 'Dean of Pharmacy',
+            nameAr: 'عميد كلية الصيدلة',
             message: 'Welcome to the Faculty of Pharmacy. Innovating healthcare through pharmaceutical sciences.',
             messageAr: 'مرحباً بكم في كلية الصيدلة. الابتكار في الرعاية الصحية من خلال العلوم الصيدلانية.',
-            image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB_vQ9q_jKQ4wH_XQK_X_9V_Q9q_jKQ4wH_XQK_X_9V_Q9q_jKQ4wH_XQK_X_9V_Q9q_jKQ4wH_XQK_X_9V'
+            image: headPharmacyImage
         },
         departments: [
             {
@@ -112,7 +116,14 @@ export const getInitialCollegeData = () => {
     const stored = localStorage.getItem('college_db');
     if (stored) {
         try {
-            return JSON.parse(stored);
+            const parsed = JSON.parse(stored);
+            // Migrate old mock data image placeholders to the new local assets
+            ['computer-science', 'tourism', 'pharmacy'].forEach(col => {
+                if (parsed[col]?.deanSection?.image && parsed[col].deanSection.image.includes('lh3.googleusercontent.com')) {
+                    parsed[col].deanSection.image = INITIAL_COLLEGE_DATA[col].deanSection.image;
+                }
+            });
+            return parsed;
         } catch (e) {
             console.error('Error parsing college db', e);
             return INITIAL_COLLEGE_DATA;

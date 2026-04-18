@@ -1,6 +1,7 @@
 import React from 'react';
 import { useThemeContext } from '../context/ThemeContext';
 import { useGlobalData } from '../context/GlobalDataContext';
+import presidentFallbackImage from '../assets/head_UNIVERSITY.png';
 
 export default function About() {
     const { isRtl } = useThemeContext();
@@ -54,11 +55,7 @@ export default function About() {
                                 </div>
                                 <div className="pt-8 flex items-center gap-4">
                                     <div className="h-12 w-12 rounded-full bg-slate-200 dark:bg-slate-800 border-2 border-primary flex items-center justify-center overflow-hidden">
-                                        {president?.image ? (
-                                            <img src={president.image} alt="President Avatar" className="w-full h-full object-cover" />
-                                        ) : (
-                                            <span className="material-symbols-outlined text-slate-400">person</span>
-                                        )}
+                                        <img src={president?.image || presidentFallbackImage} alt="President Avatar" className="w-full h-full object-cover" />
                                     </div>
                                     <div>
                                         <p className="font-bold text-slate-900 dark:text-white">
@@ -78,7 +75,7 @@ export default function About() {
                                     className="rounded-3xl shadow-2xl w-full h-[600px] object-cover"
                                     loading="lazy"
                                     alt={isRtl ? "صورة لرئيس الجامعة" : "Portrait of the University President"}
-                                    src={president?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200"}
+                                    src={president?.image || presidentFallbackImage}
                                 />
                             </div>
                         </div>

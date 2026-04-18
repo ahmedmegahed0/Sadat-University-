@@ -1,3 +1,5 @@
+import presidentImage from '../assets/head_UNIVERSITY.png';
+
 export const initialRankings = [
   {
     slug: 'qs-arab',
@@ -286,11 +288,11 @@ export const initialNews = [
 ];
 
 export const initialPresident = {
-    nameEn: "Dr. Ahmed Megahed",
-    nameAr: "د. أحمد مجاهد",
+    nameEn: "University President",
+    nameAr: "رئيس الجامعة",
     titleEn: "University President",
     titleAr: "رئيس الجامعة",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200",
+    image: presidentImage,
     messageEn: "Welcome to Sadat Smart University. Our vision is to pioneer a smart, sustainable, and innovative educational ecosystem.",
     messageAr: "مرحباً بكم في جامعة السادات الذكية. رؤيتنا هي ريادة نظام بيئي تعليمي ذكي ومستدام ومبتكر."
 };

@@ -4,6 +4,7 @@ import { useThemeContext } from '../context/ThemeContext';
 import { useCollegeContext } from '../context/CollegeContext';
 import { useFacultyContext } from '../context/FacultyContext';
 import FacultyCard from '../components/faculty/FacultyCard';
+import headTourismImage from '../assets/head_TOURISM.jpeg';
 
 export default function Tourism() {
     const { isRtl } = useThemeContext();
@@ -71,7 +72,7 @@ export default function Tourism() {
                             <div className="relative shrink-0">
                                 <div
                                     className="h-72 w-72 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800"
-                                    style={{ backgroundImage: `url("${college?.deanSection?.image || ''}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                                    style={{ backgroundImage: `url("${college?.deanSection?.image || headTourismImage}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                                 ></div>
                                 <div className={`absolute -bottom-6 ${isRtl ? '-left-6' : '-right-6'} flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-slate-900 shadow-xl shadow-primary/20`}>
                                     <span className="material-symbols-outlined text-3xl">format_quote</span>

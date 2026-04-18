@@ -6,7 +6,14 @@ const GlobalDataContext = createContext(null);
 export const GlobalDataProvider = ({ children }) => {
     const [globalData, setGlobalData] = useState(() => {
         const stored = localStorage.getItem('stitch_global_data');
-        if (stored) return JSON.parse(stored);
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            // Migrate old unsplash president image
+            if (parsed.president?.image?.includes('unsplash.com')) {
+                parsed.president.image = '';
+            }
+            return parsed;
+        }
         
         // Load initial defaults if nothing is stored globally
         const initial = getGlobalInitialData();

@@ -1,11 +1,15 @@
 import React from 'react';
 import { useThemeContext } from '../context/ThemeContext';
 import { useFacultyContext } from '../context/FacultyContext';
+import { useCollegeContext } from '../context/CollegeContext';
 import FacultyCard from '../components/faculty/FacultyCard';
+import headPharmacyImage from '../assets/head_MEDICINE.jpeg';
 
 export default function Pharmacy() {
     const { isRtl } = useThemeContext();
     const { facultyList } = useFacultyContext();
+    const { colleges } = useCollegeContext();
+    const college = colleges['pharmacy'];
     
     const filteredFaculty = facultyList.filter(f => f.colleges && f.colleges.includes('pharmacy'))
         .sort((a, b) => {
@@ -71,7 +75,7 @@ export default function Pharmacy() {
                                 <img
                                     className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
                                     alt="Dean Portrait"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiSzf_Ui8s1z3cNBEdpiFuq7YeLrnH0wS_yh4i7UlfopkPo-cPMu0jOHGlgt_QRx1vZ7Kts_lyQ34nWG_1LU-rKgwmaz0qyEgqeOisV461tZO30LiamkT9n39llF6sf0CnpjMnxt8Wz1gd1egEXheUw1XE75-0j1f7qvYHFZj3xy38v2MBNaw_LJvr4N-68TMmEuuRp4iTN439SiGqYb-4KPgtIJROR3x3M1Z1oa2hGrmnR8V9y1zkfMrfJ-lcDg2KnysAdzl9C-6B"
+                                    src={college?.deanSection?.image || headPharmacyImage}
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-80"></div>
                             </div>
@@ -87,13 +91,11 @@ export default function Pharmacy() {
                             </h2>
                             <div className="space-y-6">
                                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg font-medium">
-                                    {isRtl
-                                        ? 'مرحباً بكم في كلية الصيدلة في جامعة السادات الذكية. مهمتنا هي توفير بيئة يلتقي فيها البحث العلمي مع الممارسة السريرية. نحن نفخر بمناهجنا المبتكرة التي تركز على الرعاية التي تتمحور حول المريض وأبحاث اكتشاف الأدوية المتطورة.'
-                                        : 'Welcome to the Faculty of Pharmacy at Sadat Smart University. Our mission is to provide an environment where scientific inquiry meets clinical practice. We take pride in our innovative curriculum that focuses on patient-centered care and cutting-edge drug discovery research.'}
+                                    {isRtl ? college?.deanSection?.messageAr : college?.deanSection?.message}
                                 </p>
                             </div>
                             <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
-                                <p className="text-2xl font-black text-slate-900 dark:text-white mb-2">{isRtl ? 'د. أحمد منصور' : 'Dr. Ahmed Mansour'}</p>
+                                <p className="text-2xl font-black text-slate-900 dark:text-white mb-2">{isRtl ? college?.deanSection?.nameAr : college?.deanSection?.name}</p>
                                 <p className="text-primary font-bold">{isRtl ? 'أستاذ الصيدلة السريرية والعميد' : 'Professor of Clinical Pharmacy & Dean'}</p>
                             </div>
                             <button className="inline-flex mt-4 items-center gap-2 text-slate-900 dark:text-white font-bold bg-slate-50 dark:bg-slate-800 px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-primary hover:text-slate-900 hover:border-primary transition-all group">
